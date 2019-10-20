@@ -47,7 +47,7 @@ export default function RTLNavbarLinks() {
           inputProps={{
             placeholder: "جستجو...",
             inputProps: {
-              "aria-label": "Search"
+              "aria-label": "Buscar..."
             }
           }}
         />

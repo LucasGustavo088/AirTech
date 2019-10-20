@@ -16,7 +16,6 @@ import CardFooter from "components/Card/CardFooter.js";
 import avatar from "assets/img/faces/marc.jpg";
 import skyBackground from "assets/img/background-sky.jpg";
 import logo from "assets/img/logo.png";
-import { Link } from "react-router-dom";
 
 const styles = {
   cardCategoryWhite: {
@@ -45,20 +44,31 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-export default function Login() {
+export default function Register() {
   const classes = useStyles();
   return (
     <div style={{background: "url(" + skyBackground + ") no-repeat center top", height: "900px"}}>
-      <GridContainer>
+      {/* <GridContainer>
         <img style={{margin: "0 auto", marginTop: "30px"}} src={logo}></img>
-      </GridContainer>
+      </GridContainer> */}
       <GridContainer>
         <GridItem style={styles.gridItemCenter} xs={10} sm={4} md={4}>
           <Card>
             <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>Logar</h4>
+              <h4 className={classes.cardTitleWhite}>Registrar</h4>
             </CardHeader>
             <CardBody>
+                <GridContainer>
+                <GridItem xs={12} sm={12} md={12}>
+                  <CustomInput
+                    labelText="Nome completo"
+                    id="nome_completo"
+                    formControlProps={{
+                      fullWidth: true
+                    }}
+                  />
+                </GridItem>
+              </GridContainer>
               <GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
                   <CustomInput
@@ -84,17 +94,24 @@ export default function Login() {
                   />
                 </GridItem>
               </GridContainer>
+              <GridContainer>
+                <GridItem xs={12} sm={12} md={12}>
+                  <CustomInput
+                    labelText="Confirme a senha"
+                    id="password"
+                    inputProps={{
+                      type: "password"
+                    }}
+                    formControlProps={{
+                      fullWidth: true
+                    }}
+                  />
+                </GridItem>
+              </GridContainer>
             </CardBody>
-            <Link to={'/admin/dashboard'}>
-              <CardFooter>
-                  <Button className="MuiGrid-grid-xs-12 MuiGrid-grid-sm-12 MuiGrid-grid-md-12" color="primary">Logar</Button>
-              </CardFooter>
-            </Link>
-            <Link to={'/register'}>
-              <CardFooter>
-                <Button className="MuiGrid-grid-xs-12 MuiGrid-grid-sm-12 MuiGrid-grid-md-12" color="primary">Registrar</Button>
-              </CardFooter>
-            </Link>
+            <CardFooter>
+              <Button className="MuiGrid-grid-xs-12 MuiGrid-grid-sm-12 MuiGrid-grid-md-12" color="primary">Registrar</Button>
+            </CardFooter>
           </Card>
         </GridItem>
       </GridContainer>

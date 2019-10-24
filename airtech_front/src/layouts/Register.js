@@ -16,105 +16,149 @@ import CardFooter from "components/Card/CardFooter.js";
 import avatar from "assets/img/faces/marc.jpg";
 import skyBackground from "assets/img/background-sky.jpg";
 import logo from "assets/img/logo.png";
+import axios from 'axios';
 
-const styles = {
-  cardCategoryWhite: {
-    color: "rgba(255,255,255,.62)",
-    margin: "0",
-    fontSize: "14px",
-    marginTop: "0",
-    marginBottom: "0"
-  },
-  cardTitleWhite: {
-    color: "#FFFFFF",
-    marginTop: "0px",
-    minHeight: "auto",
-    fontWeight: "300",
-    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: "3px",
-    textDecoration: "none",
-    textAlign: "center"
-  },
-  gridItemCenter: {
-    margin: "0 auto",
-    marginTop: "30px"
-  },
+export default class Register extends React.Component {
+  
+  constructor(props) {
+    super(props);
+    
+    this.state = {
+      register_email: null,
+      errors: {
+        register_email: "",
+      }
+    }
+  };
 
-};
+  registerAjax() {
+    let nome_completo = document.getElementById("nome_completo").value;
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+    let password_confirmation = document.getElementById("password_confirmation").value;
+    let url = "http://ec2-34-220-121-112.us-west-2.compute.amazonaws.com/api/v1/usuario";
+    
+    if(password != password_confirmation) {
+      alert("Password incorrect");
+    } else {
+      let user = {
+        nome: nome_completo,
+        email: email,
+        password: password
+      };
 
-const useStyles = makeStyles(styles);
+      axios.post(url, { user })
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+      })
+    }
+  }
 
-export default function Register() {
-  const classes = useStyles();
-  return (
-    <div style={{background: "url(" + skyBackground + ") no-repeat center top", height: "900px"}}>
-      {/* <GridContainer>
-        <img style={{margin: "0 auto", marginTop: "30px"}} src={logo}></img>
-      </GridContainer> */}
-      <GridContainer>
-        <GridItem style={styles.gridItemCenter} xs={10} sm={4} md={4}>
-          <Card>
-            <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>Registrar</h4>
-            </CardHeader>
-            <CardBody>
+  render() {
+    let styles = {
+      cardCategoryWhite: {
+        color: "rgba(255,255,255,.62)",
+        margin: "0",
+        fontSize: "14px",
+        marginTop: "0",
+        marginBottom: "0"
+      },
+      cardTitleWhite: {
+        color: "#FFFFFF",
+        marginTop: "0px",
+        minHeight: "auto",
+        fontWeight: "300",
+        fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
+        marginBottom: "3px",
+        textDecoration: "none",
+        textAlign: "center"
+      },
+      gridItemCenter: {
+        margin: "0 auto",
+        marginTop: "30px"
+      },
+    };
+
+    return (
+      <div style={{background: "url(" + skyBackground + ") no-repeat center top", height: "900px"}}>
+        {/* <GridContainer>
+          <img style={{margin: "0 auto", marginTop: "30px"}} src={logo}></img>
+        </GridContainer> */}
+        <GridContainer>
+          <GridItem style={styles.gridItemCenter} xs={10} sm={4} md={4}>
+            <Card>
+              <CardHeader color="primary">
+                <h4 style={{
+        color: "#FFFFFF",
+        marginTop: "0px",
+        minHeight: "auto",
+        fontWeight: "300",
+        fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
+        marginBottom: "3px",
+        textDecoration: "none",
+        textAlign: "center"
+      }}>Registrar</h4>
+              </CardHeader>
+              <CardBody>
+                  <GridContainer>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <CustomInput
+                      labelText="Nome completo"
+                      id="nome_completo"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                    />
+                  </GridItem>
+                </GridContainer>
                 <GridContainer>
-                <GridItem xs={12} sm={12} md={12}>
-                  <CustomInput
-                    labelText="Nome completo"
-                    id="nome_completo"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                  />
-                </GridItem>
-              </GridContainer>
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={12}>
-                  <CustomInput
-                    labelText="Email"
-                    id="email"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                  />
-                </GridItem>
-              </GridContainer>
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={12}>
-                  <CustomInput
-                    labelText="Senha"
-                    id="password"
-                    inputProps={{
-                      type: "password"
-                    }}
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                  />
-                </GridItem>
-              </GridContainer>
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={12}>
-                  <CustomInput
-                    labelText="Confirme a senha"
-                    id="password"
-                    inputProps={{
-                      type: "password"
-                    }}
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                  />
-                </GridItem>
-              </GridContainer>
-            </CardBody>
-            <CardFooter>
-              <Button className="MuiGrid-grid-xs-12 MuiGrid-grid-sm-12 MuiGrid-grid-md-12" color="primary">Registrar</Button>
-            </CardFooter>
-          </Card>
-        </GridItem>
-      </GridContainer>
-    </div>
-  );
+                  <GridItem xs={12} sm={12} md={12}>
+                    <CustomInput
+                      labelText="Email"
+                      id="email"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                    />
+                  </GridItem>
+                </GridContainer>
+                <GridContainer>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <CustomInput
+                      labelText="Senha"
+                      id="password"
+                      inputProps={{
+                        type: "password"
+                      }}
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                    />
+                  </GridItem>
+                </GridContainer>
+                <GridContainer>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <CustomInput
+                      labelText="Confirme a senha"
+                      id="password_confirmation"
+                      inputProps={{
+                        type: "password"
+                      }}
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                    />
+                  </GridItem>
+                </GridContainer>
+              </CardBody>
+              <CardFooter>
+                <Button className="MuiGrid-grid-xs-12 MuiGrid-grid-sm-12 MuiGrid-grid-md-12" onClick={this.registerAjax} color="primary">Registrar</Button>
+              </CardFooter>
+            </Card>
+          </GridItem>
+        </GridContainer>
+      </div>
+    );
+  }
 }

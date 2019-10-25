@@ -18,20 +18,33 @@ import axios from 'axios';
 export default class CreateDevice extends React.Component {
     
     createAjax() {
-    //     let pin = document.getElementById("pin").value;
-    //     let nome = document.getElementById("nome").value;
-    //     let descricao = document.getElementById("descricao").value;
-    //     let url = "https://cors-anywhere.herokuapp.com/http://ec2-34-220-121-112.us-west-2.compute.amazonaws.com/api/v1/equipamento";
+        let pin = parseInt(document.getElementById("pin").value);
+        let nome = document.getElementById("nome").value;
+        let descricao = document.getElementById("descricao").value;
+        let url = "https://cors-anywhere.herokuapp.com/http://ec2-34-220-121-112.us-west-2.compute.amazonaws.com/api/v1/equipamento";
     
-    //   let device = {
-    //     pin: pin,
-    //     nome: nome,
-    //     descricao: descricao,
-    //   };
+      let device = {
+        pin: pin,
+        nome: nome,
+        descricao: descricao,
+      };
 
+      let token = localStorage.getItem("token");
 
-    //   axios.post(url, { headers: {"Authorization" : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiaWF0IjoxNTcxOTU5NzEyLCJleHAiOjE1NzIwNDYxMTJ9.pxcuXLM-R-jVoH6nVCd6jBtxSVS0Qw_bT4rLjTNhtVY'}, body: device})
-        alert('Salvo com sucesso.');
+      if(token == "") {
+        alert("Houve um erro ao obter o token");
+      } else {
+        axios({
+          method: 'post',
+          url: url,
+          headers: {
+            "Authorization" : token
+          }, 
+          data: device
+        }).then(res => {
+          console.log(res);
+        });
+      }
     }
 
     render() {

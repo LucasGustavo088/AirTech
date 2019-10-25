@@ -35,6 +35,7 @@ ReactDOM.render(
     <Switch>
       <Route path="/admin" component={Admin} />
       <Route path="/login" component={Login} />
+      {/* <Route path="/login" exact component={() => <Login location={this.props.location} history={this.props.history}/>}/> */}
       <Route path="/register" component={Register} />
       <Route path="/rtl" component={RTL} />
       <Redirect from="/" to="/admin/dashboard" />

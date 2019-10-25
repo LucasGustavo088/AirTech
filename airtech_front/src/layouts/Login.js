@@ -18,31 +18,39 @@ import skyBackground from "assets/img/background-sky.jpg";
 import logo from "assets/img/logo.png";
 import { Link } from "react-router-dom";
 import axios from 'axios';
+import { Router, Route, Switch, Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 export default class Login extends React.Component {
   
-  loginAjax() {
+  constructor(props) {
+    super(props);
+  };
+
+  loginAjax = () => {
     let email = document.getElementById("email").value;
     let password = document.getElementById("password").value;
     let url = "https://cors-anywhere.herokuapp.com/http://ec2-34-220-121-112.us-west-2.compute.amazonaws.com/api/v1/usuario/login";
-    
-      let user = {
-        email: email,
-        senha: password
-      };
+    let user = {
+      email: email,
+      senha: password
+    };
 
       axios.post(url, user)
       .then(res => {
-        // if(typeof res.data.token != 'undefined') {
-          console.log(res.data.data.token);
+          console.log('token', res.data.data.token);
           
           if(typeof res.data.data.token != 'undefined') {
             localStorage.setItem('token', res.data.data.token);
+            console.log('Login realizado com sucesso');
+            this.props.history.push('/admin/dashboard')
           } else {
-            alert("Não deu certo o login");
+            alert("Login ou usuário inválidos");
           }
         // }
-      })
+      }).catch(function (error) {
+        alert('Houve um erro ao logar');
+      });
   }
 
   render() {
@@ -68,7 +76,6 @@ export default class Login extends React.Component {
         margin: "0 auto",
         marginTop: "30px"
       },
-    
     };
 
     return (
@@ -81,15 +88,15 @@ export default class Login extends React.Component {
             <Card>
               <CardHeader color="primary">
                 <h4 style={{
-        color: "#FFFFFF",
-        marginTop: "0px",
-        minHeight: "auto",
-        fontWeight: "300",
-        fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-        marginBottom: "3px",
-        textDecoration: "none",
-        textAlign: "center"
-      }}>Logar</h4>
+                color: "#FFFFFF",
+                marginTop: "0px",
+                minHeight: "auto",
+                fontWeight: "300",
+                fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
+                marginBottom: "3px",
+                textDecoration: "none",
+                textAlign: "center"
+              }}>Logar</h4>
               </CardHeader>
               <CardBody>
                 <GridContainer>

@@ -36,6 +36,7 @@ import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.js";
 // core components/views for RTL layout
 import RTLPage from "views/RTLPage/RTLPage.js";
 import Device from "views/Device/Device";
+import CreateDevice from "views/Device/CreateDevice";
 
 const dashboardRoutes = [
   {
@@ -60,6 +61,22 @@ const dashboardRoutes = [
     rtlName: "طباعة",
     icon: LibraryBooks,
     component: Device,
+    layout: "/admin"
+  },
+  {
+    path: "/create-device",
+    name: "Adicionar Aparelho",
+    rtlName: "طباعة",
+    icon: Notifications,
+    component: CreateDevice,
+    layout: "/admin"
+  },
+  {
+    path: "/amostras",
+    name: "Amostras",
+    rtlName: "طباعة",
+    icon: BubbleChart,
+    component: '',
     layout: "/admin"
   },
   // {

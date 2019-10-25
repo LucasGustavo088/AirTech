@@ -8,6 +8,7 @@ import Table from "components/Table/Table.js";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
+import { Button, Link } from "@material-ui/core";
 
 const styles = {
   cardCategoryWhite: {
@@ -50,7 +51,9 @@ export default function Device() {
           <CardHeader color="primary">
             <h4 className={classes.cardTitleWhite}>Aparelhos</h4>
             <p className={classes.cardCategoryWhite}>
-              Listagem de aparelhos
+              {/* <Link to="admin/create-device"> */}
+                <Button style={{color: "white"}}>Adicionar aparelho</Button>
+              {/* </Link> */}
             </p>
           </CardHeader>
           <CardBody>

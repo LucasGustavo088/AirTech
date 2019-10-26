@@ -14,14 +14,17 @@ import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
 import avatar from "assets/img/faces/marc.jpg";
 import axios from 'axios';
+import api from "services/api";
+import {getToken} from "services/auth";
+import Utils from "utils/utils";
 
 export default class CreateDevice extends React.Component {
     
     createAjax() {
-        let pin = parseInt(document.getElementById("pin").value);
-        let nome = document.getElementById("nome").value;
-        let descricao = document.getElementById("descricao").value;
-        let url = "https://cors-anywhere.herokuapp.com/http://ec2-34-220-121-112.us-west-2.compute.amazonaws.com/api/v1/equipamento";
+      let pin = parseInt(document.getElementById("pin").value);
+      let nome = document.getElementById("nome").value;
+      let descricao = document.getElementById("descricao").value;
+      let url = api.baseUrl + "equipamento";
     
       let device = {
         pin: pin,
@@ -29,10 +32,10 @@ export default class CreateDevice extends React.Component {
         descricao: descricao,
       };
 
-      let token = localStorage.getItem("token");
+      let token = getToken();
 
       if(token == "") {
-        alert("Houve um erro ao obter o token");
+        Utils.alertAirtech("Houve um erro ao obter o token");
       } else {
         axios({
           method: 'post',
@@ -42,7 +45,11 @@ export default class CreateDevice extends React.Component {
           }, 
           data: device
         }).then(res => {
-          console.log(res);
+          if(res.data.success) {
+            Utils.alertAirtech("Equipamento adicionado com sucesso.", "success");
+          } else {
+            Utils.alertAirtech("Não foi possível adicionar", "error");
+          }
         });
       }
     }
@@ -97,6 +104,9 @@ export default class CreateDevice extends React.Component {
                           <CustomInput
                             labelText="PIN do aparelho"
                             id="pin"
+                            inputProps={{
+                              type: "number"
+                            }}
                             formControlProps={{
                               fullWidth: true
                             }}

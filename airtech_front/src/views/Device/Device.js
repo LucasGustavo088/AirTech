@@ -10,6 +10,8 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import { Button, Link } from "@material-ui/core";
 import axios from 'axios';
+import api from "services/api";
+import { getToken } from "services/auth";
 
 export default class Device extends React.Component {
   
@@ -21,7 +23,22 @@ export default class Device extends React.Component {
     }
   };
 
+  getDeviceAjax = () => {
+    let url = api.baseUrl + "equipamento";
+    axios({
+      method: 'get',
+      url: url,
+      headers: {
+        "Authorization" : getToken()
+      } 
+    }).then(res => {
+      console.log(res);
+    });
+  }
+
   render() {
+    this.getDeviceAjax();
+
     const styles = {
       cardCategoryWhite: {
         "&,& a,& a:hover,& a:focus": {

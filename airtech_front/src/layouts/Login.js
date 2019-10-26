@@ -12,6 +12,7 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardAvatar from "components/Card/CardAvatar.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
+import {getToken, login} from "services/auth.js";
 
 import avatar from "assets/img/faces/marc.jpg";
 import skyBackground from "assets/img/background-sky.jpg";
@@ -20,37 +21,40 @@ import { Link } from "react-router-dom";
 import axios from 'axios';
 import { Router, Route, Switch, Redirect } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import { isAuthenticated } from "services/auth";
+import swal from 'sweetalert';
+import Utils from "utils/utils";
+import api from "services/api";
 
 export default class Login extends React.Component {
   
   constructor(props) {
     super(props);
+
+
   };
 
   loginAjax = () => {
     let email = document.getElementById("email").value;
     let password = document.getElementById("password").value;
-    let url = "https://cors-anywhere.herokuapp.com/http://ec2-34-220-121-112.us-west-2.compute.amazonaws.com/api/v1/usuario/login";
+    let url = api.baseUrl + "usuario/login";
     let user = {
       email: email,
       senha: password
     };
 
-      axios.post(url, user)
-      .then(res => {
-          console.log('token', res.data.data.token);
-          
-          if(typeof res.data.data.token != 'undefined') {
-            localStorage.setItem('token', res.data.data.token);
-            console.log('Login realizado com sucesso');
-            this.props.history.push('/admin/dashboard')
-          } else {
-            alert("Login ou usuário inválidos");
-          }
-        // }
-      }).catch(function (error) {
-        alert('Houve um erro ao logar');
-      });
+    axios.post(url, user)
+    .then(res => {
+      console.log('token', res.data.data.token);
+      if(typeof res.data.data.token != 'undefined') {
+        login(res.data.data.token);
+        this.props.history.push('/admin/dashboard')
+      } else {
+        Utils.alertAirtech("Login ou usuário inválidos", 'success');
+      }
+    }).catch(function (error) {
+      Utils.alertAirtech('Houve um erro ao logar', 'error');
+    });
   }
 
   render() {

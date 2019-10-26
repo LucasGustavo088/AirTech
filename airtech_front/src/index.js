@@ -27,18 +27,30 @@ import RTL from "layouts/RTL.js";
 import "assets/css/material-dashboard-react.css?v=1.8.0";
 import Login from "layouts/Login.js";
 import Register from "layouts/Register";
+import {getToken, login, isAuthenticated} from "services/auth.js";
 
 const hist = createBrowserHistory();
+
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={props =>
+      isAuthenticated() ? (
+        <Component {...props} />
+      ) : (
+        <Redirect to={{ pathname: "/", state: { from: props.location } }} />
+      )
+    }
+  />
+);
 
 ReactDOM.render(
   <Router history={hist}>
     <Switch>
-      <Route path="/admin" component={Admin} />
+      <PrivateRoute path="/admin" component={Admin} />
       <Route path="/login" component={Login} />
-      {/* <Route path="/login" exact component={() => <Login location={this.props.location} history={this.props.history}/>}/> */}
       <Route path="/register" component={Register} />
-      <Route path="/rtl" component={RTL} />
-      <Redirect from="/" to="/admin/dashboard" />
+      <Redirect from="/" to="/login" />
     </Switch>
   </Router>,
   document.getElementById("root")

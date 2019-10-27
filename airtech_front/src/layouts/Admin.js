@@ -23,14 +23,14 @@ let ps;
 const switchRoutes = (
   <Switch>
     {routes.map((prop, key) => {
-      if (prop.layout === "/admin") {
-        return (
-          <Route
-            path={prop.layout + prop.path}
-            component={prop.component}
-            key={key}
-          />
-        );
+      if (prop.layout.includes("/admin")) {
+          return (
+            <Route
+              path={prop.layout + prop.path}
+              component={prop.component}
+              key={key}
+            />
+          );
       }
       return null;
     })}

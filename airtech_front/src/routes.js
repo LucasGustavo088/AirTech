@@ -56,20 +56,21 @@ const dashboardRoutes = [
     layout: "/admin"
   },
   {
-    path: "/device",
+    path: "/device/list-device",
     name: "Aparelho",
     rtlName: "طباعة",
     icon: LibraryBooks,
     component: Device,
-    layout: "/admin"
+    layout: "/admin",
   },
   {
-    path: "/create-device",
+    path: "/device/create-device",
     name: "Adicionar Aparelho",
     rtlName: "طباعة",
     icon: Notifications,
     component: CreateDevice,
-    layout: "/admin"
+    layout: "/admin",
+    subMenu: true
   },
   {
     path: "/amostras",

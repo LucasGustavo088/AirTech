@@ -18,7 +18,7 @@ import Search from "@material-ui/icons/Search";
 // core components
 import CustomInput from "components/CustomInput/CustomInput.js";
 import Button from "components/CustomButtons/Button.js";
-
+import { logout } from "services/auth";
 import styles from "assets/jss/material-dashboard-react/components/headerLinksStyle.js";
 
 const useStyles = makeStyles(styles);
@@ -46,6 +46,8 @@ export default function AdminNavbarLinks() {
   };
   const handleCloseProfile = () => {
     setOpenProfile(null);
+    logout();
+    window.location.reload();
   };
   return (
     <div>

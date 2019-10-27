@@ -8,7 +8,9 @@ import Table from "components/Table/Table.js";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
-import { Button, Link } from "@material-ui/core";
+import { Button } from "@material-ui/core";
+import { Link } from "react-router-dom";
+
 import axios from 'axios';
 import api from "services/api";
 import { getToken } from "services/auth";
@@ -76,9 +78,9 @@ export default class Device extends React.Component {
             <CardHeader color="primary">
               <h4 style={styles.cardTitleWhite}>Aparelhos</h4>
               <p style={styles.cardCategoryWhite}>
-                {/* <Link to="admin/create-device"> */}
+                <Link to="/admin/device/create-device">
                   <Button style={{color: "white"}}>Adicionar aparelho</Button>
-                {/* </Link> */}
+                </Link>
               </p>
             </CardHeader>
             <CardBody>

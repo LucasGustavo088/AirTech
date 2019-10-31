@@ -37,6 +37,8 @@ import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.js";
 import RTLPage from "views/RTLPage/RTLPage.js";
 import Device from "views/Device/Device";
 import CreateDevice from "views/Device/CreateDevice";
+import PerfilAmostras from "views/PerfilAmostras/PerfilAmostras";
+import CreatePerfilAmostras from "views/PerfilAmostras/CreatePerfilAmostras";
 
 const dashboardRoutes = [
   {
@@ -73,12 +75,21 @@ const dashboardRoutes = [
     subMenu: true
   },
   {
-    path: "/perfil-amostras",
+    path: "/perfil-amostras/list-perfil-amostras",
     name: "Perfil das amostras",
     rtlName: "طباعة",
     icon: BubbleChart,
-    component: '',
+    component: PerfilAmostras,
     layout: "/admin"
+  },
+  {
+    path: "/perfil-amostras/create-perfil-amostras",
+    name: "Adicionar perfil da amostra",
+    rtlName: "طباعة",
+    icon: Notifications,
+    component: CreatePerfilAmostras,
+    layout: "/admin",
+    subMenu: true
   },
   // {
   //   path: "/table",

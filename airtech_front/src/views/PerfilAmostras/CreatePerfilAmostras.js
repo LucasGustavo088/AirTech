@@ -23,8 +23,39 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import CustomSelect from "components/CustomSelect/CustomSelect";
 
-export default class CreateDevice extends React.Component {
+export default class CreatePerfilAmostras extends React.Component {
     
+    constructor(props) {
+        super(props);
+        this.getDeviceAjax();
+    
+        this.state = {
+          tableData: []
+        }
+    };
+
+    getDeviceAjax = () => {
+        let url = api.baseUrl + "equipamento";
+        axios({
+          method: 'get',
+          url: url,
+          headers: {
+            "Authorization" : getToken()
+          } 
+        }).then(res => {
+          console.log('res', res);
+          if(typeof res.data.data.equipamentosCadastrados != "undefined") {
+            let newTableData = [];
+            res.data.data.equipamentosCadastrados.forEach((equipamento, index) => {
+              let itemTable = [equipamento.id, equipamento.nome, equipamento.descricao, equipamento.dataRegistro, equipamento.dataRegistro];
+              newTableData.push(itemTable);
+              console.log(equipamento);
+            });
+            this.setState({tableData: newTableData});
+          }
+        });
+    }
+
     createAjax() {
       let pin = parseInt(document.getElementById("pin").value);
       let nome = document.getElementById("nome").value;
@@ -47,12 +78,6 @@ export default class CreateDevice extends React.Component {
       if(publico != "sim" && publico != "nao") {
         Utils.alertAirtech("Informe o campo público sim ou nao", "error");
         return false;
-      } else {
-        if(publico == "sim") {
-          publico = 1;
-        }  else {
-          publico = 0;
-        }
       }
 
       if(token == "") {
@@ -123,10 +148,10 @@ export default class CreateDevice extends React.Component {
                       <GridContainer>
                         <GridItem xs={12} sm={12} md={6}>
                           <CustomInput
-                            labelText="PIN do aparelho"
-                            id="pin"
+                            labelText="Data do ínicio da coleta"
+                            id="dataInicioColeta"
                             inputProps={{
-                              type: "number"
+                              type: "text"
                             }}
                             formControlProps={{
                               fullWidth: true
@@ -135,8 +160,11 @@ export default class CreateDevice extends React.Component {
                         </GridItem>
                         <GridItem xs={12} sm={12} md={6}>
                           <CustomInput
-                            labelText="Nome do aparelho"
-                            id="nome"
+                            labelText="Data do término da coleta"
+                            id="dataTerminoColeta"
+                            inputProps={{
+                                type: "text"
+                            }}
                             formControlProps={{
                               fullWidth: true
                             }}
@@ -144,33 +172,42 @@ export default class CreateDevice extends React.Component {
                         </GridItem>
                         <GridItem xs={12} sm={12} md={6}>
                           <CustomInput
-                            labelText="Descrição"
-                            id="descricao"
+                            labelText="Tempo de exposição"
+                            id="tempoExposicao"
                             formControlProps={{
                               fullWidth: true
+                            }}
+                            inputProps={{
+                                type: "number"
                             }}
                           />
                         </GridItem>
                         <GridItem xs={12} sm={12} md={6}>
-                          <CustomSelect
-                            labelText="Público"
-                            id="publico"
-                            inputProps={{
-                              placeholder: "sim ou nao"
-                            }}
-                            formControlProps={{
-                              fullWidth: true
-                            }}
-                          />                            
+                            <CustomInput
+                                labelText="ID dos equipamento(s)"
+                                id="equipamentos"
+                                formControlProps={{
+                                fullWidth: true
+                                }}
+                                inputProps={{
+                                    type: "text"
+                                }}
+                            />                     
                         </GridItem>
                         <GridItem xs={12} sm={12} md={6}>
-                          <CustomSelect
-                            labelText="CEP da Posição atual"
-                            id="cep_posicao_atual"
-                            formControlProps={{
-                              fullWidth: true
-                            }}
-                          />                            
+                            <CustomInput
+                                labelText="ID dos sensores(s)"
+                                id="sensores"
+                                formControlProps={{
+                                fullWidth: true
+                                }}
+                                inputProps={{
+                                    type: "text"
+                                }}
+                            />          
+                        </GridItem>
+                        <GridItem xs={12} sm={12} md={6}>
+                            
                         </GridItem>
                       </GridContainer>
                     </CardBody>

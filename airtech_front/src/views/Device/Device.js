@@ -19,9 +19,10 @@ export default class Device extends React.Component {
   
   constructor(props) {
     super(props);
-  
-    this.state = {
+    this.getDeviceAjax();
 
+    this.state = {
+      tableData: []
     }
   };
 
@@ -34,13 +35,20 @@ export default class Device extends React.Component {
         "Authorization" : getToken()
       } 
     }).then(res => {
-      console.log(res);
+      console.log('res', res);
+      if(typeof res.data.data.equipamentosCadastrados != "undefined") {
+        let newTableData = [];
+        res.data.data.equipamentosCadastrados.forEach((equipamento, index) => {
+          let itemTable = [equipamento.pin, equipamento.nome, equipamento.descricao, equipamento.dataRegistro, equipamento.dataRegistro];
+          newTableData.push(itemTable);
+          console.log(equipamento);
+        });
+        this.setState({tableData: newTableData});
+      }
     });
   }
 
   render() {
-    this.getDeviceAjax();
-
     const styles = {
       cardCategoryWhite: {
         "&,& a,& a:hover,& a:focus": {
@@ -86,13 +94,8 @@ export default class Device extends React.Component {
             <CardBody>
               <Table
                 tableHeaderColor="primary"
-                tableHead={["PIN", "Nome do aparelho", "Descrição", "Data de criação"]}
-                tableData={[
-                  ["123541", "Aparelho 01", "Aparelho monóxido de carbono", "19/10/2019"],
-                  ["123541", "Aparelho 02", "Aparelho monóxido de carbono", "19/10/2019"],
-                  ["123541", "Aparelho 03", "Aparelho monóxido de carbono", "19/10/2019"],
-                  ["123541", "Aparelho 04", "Aparelho monóxido de carbono", "19/10/2019"]
-                ]}
+                tableHead={["PIN", "Nome do aparelho", "Descrição", "Data de criação", "CEP"]}
+                tableData={this.state.tableData}
               />
             </CardBody>
           </Card>

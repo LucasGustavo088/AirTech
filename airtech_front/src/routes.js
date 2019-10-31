@@ -73,8 +73,8 @@ const dashboardRoutes = [
     subMenu: true
   },
   {
-    path: "/amostras",
-    name: "Amostras",
+    path: "/perfil-amostras",
+    name: "Perfil das amostras",
     rtlName: "طباعة",
     icon: BubbleChart,
     component: '',

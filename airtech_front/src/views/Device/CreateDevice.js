@@ -17,6 +17,11 @@ import axios from 'axios';
 import api from "services/api";
 import {getToken} from "services/auth";
 import Utils from "utils/utils";
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import CustomSelect from "components/CustomSelect/CustomSelect";
 
 export default class CreateDevice extends React.Component {
     
@@ -24,15 +29,25 @@ export default class CreateDevice extends React.Component {
       let pin = parseInt(document.getElementById("pin").value);
       let nome = document.getElementById("nome").value;
       let descricao = document.getElementById("descricao").value;
+      let publico = document.getElementById("publico").value;
+      let cep_posicao_atual = document.getElementById("cep_posicao_atual").value;
       let url = api.baseUrl + "equipamento";
     
       let device = {
         pin: pin,
         nome: nome,
         descricao: descricao,
+        publico: publico,
+        cep_posicao_atual: cep_posicao_atual,
       };
 
       let token = getToken();
+
+      /* Validação */
+      if(publico != "sim" && publico != "nao") {
+        Utils.alertAirtech("Informe o campo público sim ou nao", "error");
+        return false;
+      }
 
       if(token == "") {
         Utils.alertAirtech("Houve um erro ao obter o token");
@@ -129,6 +144,27 @@ export default class CreateDevice extends React.Component {
                               fullWidth: true
                             }}
                           />
+                        </GridItem>
+                        <GridItem xs={12} sm={12} md={6}>
+                          <CustomSelect
+                            labelText="Público"
+                            id="publico"
+                            inputProps={{
+                              placeholder: "sim ou nao"
+                            }}
+                            formControlProps={{
+                              fullWidth: true
+                            }}
+                          />                            
+                        </GridItem>
+                        <GridItem xs={12} sm={12} md={6}>
+                          <CustomSelect
+                            labelText="CEP da Posição atual"
+                            id="cep_posicao_atual"
+                            formControlProps={{
+                              fullWidth: true
+                            }}
+                          />                            
                         </GridItem>
                       </GridContainer>
                     </CardBody>

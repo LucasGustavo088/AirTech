@@ -21,7 +21,7 @@ export default function CustomSelect(props) {
     labelText,
     id,
     labelProps,
-    inputProps,
+    selectProps,
     error,
     success
   } = props;
@@ -38,6 +38,20 @@ export default function CustomSelect(props) {
   const marginTop = classNames({
     [classes.marginTop]: labelText === undefined
   });
+
+  const names = [
+    'Oliver Hansen',
+    'Van Henry',
+    'April Tucker',
+    'Ralph Hubbard',
+    'Omar Alexander',
+    'Carlos Abbott',
+    'Miriam Wagner',
+    'Bradley Wilkerson',
+    'Virginia Andrews',
+    'Kelly Snyder',
+  ];
+  
   return (
     <FormControl
       {...formControlProps}
@@ -52,15 +66,37 @@ export default function CustomSelect(props) {
           {labelText}
         </InputLabel>
       ) : null}
-        <Input
+        {/* <Input
             classes={{
             root: marginTop,
             disabled: classes.disabled,
             underline: underlineClasses
             }}
             id={id}
-            {...inputProps}
-        />
+            {...selectProps}
+        /> */}
+        <Select
+          labelId="demo-mutiple-chip-label"
+          id="demo-mutiple-chip"
+          multiple
+          value={personName}
+          onChange={handleChange}
+          input={<Input id="select-multiple-chip" />}
+          renderValue={selected => (
+            <div className={classes.chips}>
+              {selected.map(value => (
+                <Chip key={value} label={value} className={classes.chip} />
+              ))}
+            </div>
+          )}
+          MenuProps={MenuProps}
+        >
+          {names.map(name => (
+            <MenuItem key={name} value={name} style={getStyles(name, personName, theme)}>
+              {name}
+            </MenuItem>
+          ))}
+        </Select>
       {error ? (
         <Clear className={classes.feedback + " " + classes.labelRootError} />
       ) : success ? (
@@ -74,7 +110,7 @@ CustomSelect.propTypes = {
   labelText: PropTypes.node,
   labelProps: PropTypes.object,
   id: PropTypes.string,
-  inputProps: PropTypes.object,
+  selectProps: PropTypes.object,
   formControlProps: PropTypes.object,
   error: PropTypes.bool,
   success: PropTypes.bool

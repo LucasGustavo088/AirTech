@@ -15,19 +15,19 @@ import axios from 'axios';
 import api from "services/api";
 import { getToken } from "services/auth";
 
-export default class PerfilAmostras extends React.Component {
+export default class Localizacao extends React.Component {
   
   constructor(props) {
     super(props);
-    this.getPerfilAmostrasAjax();
+    this.getDeviceAjax();
 
     this.state = {
       tableData: []
     }
   };
 
-  getPerfilAmostrasAjax = () => {
-    let url = api.baseUrl + "equipamento";
+  getDeviceAjax = () => {
+    let url = api.baseUrl + "localizacao";
     axios({
       method: 'get',
       url: url,
@@ -36,12 +36,11 @@ export default class PerfilAmostras extends React.Component {
       } 
     }).then(res => {
       console.log('res', res);
-      if(typeof res.data.data.equipamentosCadastrados != "undefined") {
+      if(typeof res.data.data.localizacoesDisponiveis != "undefined") {
         let newTableData = [];
-        res.data.data.equipamentosCadastrados.forEach((equipamento, index) => {
-          let itemTable = [equipamento.dataRegistro, equipamento.dataRegistro, equipamento.pin, equipamento.nome, equipamento.descricao];
+        res.data.data.localizacoesDisponiveis.forEach((localizacao, index) => {
+          let itemTable = [localizacao.estado, localizacao.cidade, localizacao.bairro, localizacao.totalEquipamentos];
           newTableData.push(itemTable);
-          console.log(equipamento);
         });
         this.setState({tableData: newTableData});
       }
@@ -84,17 +83,17 @@ export default class PerfilAmostras extends React.Component {
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary">
-              <h4 style={styles.cardTitleWhite}>Perfil das amostras</h4>
+              <h4 style={styles.cardTitleWhite}>Aparelhos</h4>
               <p style={styles.cardCategoryWhite}>
-                <Link to="/admin/perfil-amostras/create-perfil-amostras">
-                  <Button style={{color: "white"}}>Adicionar perfil de amostra</Button>
+                <Link to="/admin/device/create-device">
+                  <Button style={{color: "white"}}>Adicionar aparelho</Button>
                 </Link>
               </p>
             </CardHeader>
             <CardBody>
               <Table
                 tableHeaderColor="primary"
-                tableHead={["Data de inicio", "Data de término", "Tempo de exposição", "Equipamentos", "Sensores"]}
+                tableHead={["Estado", "Cidade", "Bairro", "Total de equipamentos"]}
                 tableData={this.state.tableData}
               />
             </CardBody>

@@ -32,17 +32,7 @@ export default class CreateDevice extends React.Component {
       let publico = document.getElementById("publico").value;
       let cep_posicao_atual = document.getElementById("cep_posicao_atual").value;
       let url = api.baseUrl + "equipamento";
-    
-      let device = {
-        pin: pin,
-        nome: nome,
-        descricao: descricao,
-        publico: publico,
-        cep_posicao_atual: cep_posicao_atual,
-      };
-
-      let token = getToken();
-
+      
       /* Validação */
       if(publico != "sim" && publico != "nao") {
         Utils.alertAirtech("Informe o campo público sim ou nao", "error");
@@ -54,6 +44,16 @@ export default class CreateDevice extends React.Component {
           publico = 0;
         }
       }
+      
+      let device = {
+        pin: pin,
+        nome: nome,
+        descricao: descricao,
+        publico: publico,
+        cep_posicao_atual: cep_posicao_atual,
+      };
+
+      let token = getToken();
 
       if(token == "") {
         Utils.alertAirtech("Houve um erro ao obter o token");

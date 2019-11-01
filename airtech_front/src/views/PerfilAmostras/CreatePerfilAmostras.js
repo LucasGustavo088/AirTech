@@ -28,9 +28,12 @@ export default class CreatePerfilAmostras extends React.Component {
     constructor(props) {
         super(props);
         this.getDeviceAjax();
-    
+
+        
         this.state = {
-          tableData: []
+          equipamentos: [],
+          equipmentosPlaceholder: "",          
+          sensoresPlaceholder: "",          
         }
     };
 
@@ -44,41 +47,70 @@ export default class CreatePerfilAmostras extends React.Component {
           } 
         }).then(res => {
           console.log('res', res);
+          let equipamentos = [];
+          let sensores = [];
           if(typeof res.data.data.equipamentosCadastrados != "undefined") {
-            let newTableData = [];
-            res.data.data.equipamentosCadastrados.forEach((equipamento, index) => {
-              let itemTable = [equipamento.id, equipamento.nome, equipamento.descricao, equipamento.dataRegistro, equipamento.dataRegistro];
-              newTableData.push(itemTable);
-              console.log(equipamento);
+            this.setState({
+              equipamentos: equipamentos
             });
-            this.setState({tableData: newTableData});
+            res.data.data.equipamentosCadastrados.forEach((item) => {
+              equipamentos.push(item.id);
+            });
           }
+          if(typeof res.data.data.sensores != "undefined") {
+            res.data.data.sensores.forEach((item) => {
+              sensores.push(item.id);
+            });
+          }
+          console.log(equipamentos);
+          console.log(sensores);
+          this.setState({
+            equipmentosPlaceholder: equipamentos.toString()
+          });
+          this.setState({
+            sensoresPlaceholder: sensores.toString()
+          });
         });
     }
 
     createAjax() {
-      let pin = parseInt(document.getElementById("pin").value);
-      let nome = document.getElementById("nome").value;
-      let descricao = document.getElementById("descricao").value;
-      let publico = document.getElementById("publico").value;
-      let cep_posicao_atual = document.getElementById("cep_posicao_atual").value;
-      let url = api.baseUrl + "equipamento";
-    
-      let device = {
-        pin: pin,
-        nome: nome,
-        descricao: descricao,
-        publico: publico,
-        cep_posicao_atual: cep_posicao_atual,
+      let dataInicioColeta = document.getElementById("dataInicioColeta").value;
+      let dataTerminoColeta = document.getElementById("dataTerminoColeta").value;
+      let tempoExposicao = parseInt(document.getElementById("tempoExposicao").value);
+      let equipamentos = document.getElementById("equipamentos").value;
+      let sensores = document.getElementById("sensores").value;
+      let url = api.baseUrl + "amostra/cadastrarPerfil";
+      
+      equipamentos=equipamentos.split(',');
+      let arrayEquipamentos = [];
+      equipamentos.forEach((item) => {
+        arrayEquipamentos.push({
+          "id": item.id
+        });
+      });
+      equipamentos = arrayEquipamentos;
+
+      sensores=sensores.split(',');
+      let arraySensores = [];
+      sensores.forEach((item) => {
+        arraySensores.push({
+          "id": item.id
+        });
+      });
+      sensores = arraySensores;
+
+
+      let perfilAmostra = {
+        dataInicioColeta: dataInicioColeta,
+        dataTerminoColeta: dataTerminoColeta,
+        tempoExposicao: tempoExposicao,
+        equipamentos: equipamentos,
+        sensores: sensores,
       };
 
       let token = getToken();
 
-      /* Validação */
-      if(publico != "sim" && publico != "nao") {
-        Utils.alertAirtech("Informe o campo público sim ou nao", "error");
-        return false;
-      }
+      /* Val(puidação */
 
       if(token == "") {
         Utils.alertAirtech("Houve um erro ao obter o token");
@@ -89,10 +121,10 @@ export default class CreatePerfilAmostras extends React.Component {
           headers: {
             "Authorization" : token
           }, 
-          data: device
+          data: perfilAmostra
         }).then(res => {
           if(res.data.success) {
-            Utils.alertAirtech("Equipamento adicionado com sucesso.", "success");
+            Utils.alertAirtech("Perfil de amostra adicionada com sucesso.", "success");
           } else {
             Utils.alertAirtech("Não foi possível adicionar", "error");
           }
@@ -183,14 +215,16 @@ export default class CreatePerfilAmostras extends React.Component {
                           />
                         </GridItem>
                         <GridItem xs={12} sm={12} md={6}>
-                            <CustomInput
+                            <CustomSelect
                                 labelText="ID dos equipamento(s)"
                                 id="equipamentos"
                                 formControlProps={{
                                 fullWidth: true
                                 }}
-                                inputProps={{
-                                    type: "text"
+                                selectProps={{
+                                    menuItens: equipamentos,
+                                    type: "text",
+                                    placeholder: this.state.equipmentosPlaceholder
                                 }}
                             />                     
                         </GridItem>
@@ -202,7 +236,8 @@ export default class CreatePerfilAmostras extends React.Component {
                                 fullWidth: true
                                 }}
                                 inputProps={{
-                                    type: "text"
+                                    type: "text",
+                                    placeholder: this.state.sensoresPlaceholder
                                 }}
                             />          
                         </GridItem>

@@ -39,6 +39,7 @@ import Device from "views/Device/Device";
 import CreateDevice from "views/Device/CreateDevice";
 import PerfilAmostras from "views/PerfilAmostras/PerfilAmostras";
 import CreatePerfilAmostras from "views/PerfilAmostras/CreatePerfilAmostras";
+import Localizacao from "views/Localizacao/Localizacao";
 
 const dashboardRoutes = [
   {
@@ -90,6 +91,14 @@ const dashboardRoutes = [
     component: CreatePerfilAmostras,
     layout: "/admin",
     subMenu: true
+  },
+  {
+    path: "/localizacao/list-localizacao",
+    name: "Listar localizações",
+    rtlName: "طباعة",
+    icon: LibraryBooks,
+    component: Localizacao,
+    layout: "/admin"
   },
   // {
   //   path: "/table",

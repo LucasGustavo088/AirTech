@@ -155,16 +155,20 @@ export default class CreateDevice extends React.Component {
                           <CustomSelect
                             labelText="Público"
                             id="publico"
-                            inputProps={{
-                              placeholder: "sim ou nao"
-                            }}
                             formControlProps={{
-                              fullWidth: true
+                            fullWidth: true
                             }}
-                          />                            
+                            selectProps={{
+                                menuItens: [
+                                  {id: 'sim', text: 'sim'}, 
+                                  {id: 'nao', text: 'nao'}
+                                ],
+                                type: "text"
+                            }}
+                          />                             
                         </GridItem>
                         <GridItem xs={12} sm={12} md={6}>
-                          <CustomSelect
+                          <CustomInput
                             labelText="CEP da Posição atual"
                             id="cep_posicao_atual"
                             formControlProps={{

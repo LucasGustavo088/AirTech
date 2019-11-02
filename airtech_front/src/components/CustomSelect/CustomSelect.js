@@ -82,7 +82,13 @@ export default function CustomSelect(props) {
     }
     setPersonName(value);
   };
-  
+  let multipleValue = false;
+
+  if(typeof selectProps != 'undefined' && typeof selectProps.multiple != 'undefined' 
+  && selectProps.multiple == true) {
+    multipleValue = true
+  }
+
   return (
     <FormControl
       {...formControlProps}
@@ -108,7 +114,7 @@ export default function CustomSelect(props) {
         /> */}
         <Select
           id={id}
-          multiple
+          multiple={multipleValue}
           value={personName}
           onChange={handleChange}
           input={<Input />}
@@ -120,7 +126,7 @@ export default function CustomSelect(props) {
           }}
         >
           {selectProps.menuItens.map(item => (
-            <MenuItem key={item.id} value={item.id} style={getStyles(item, personName, theme)}>
+            <MenuItem key={item.id} value={item.id}>
               {item.text}
             </MenuItem>
           ))}

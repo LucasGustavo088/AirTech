@@ -80,7 +80,7 @@ export default class CreatePerfilAmostras extends React.Component {
       let arrayEquipamentos = [];
       equipamentos.forEach((item) => {
         arrayEquipamentos.push({
-          "id": item.id
+          "id": item
         });
       });
       equipamentos = arrayEquipamentos;
@@ -89,11 +89,10 @@ export default class CreatePerfilAmostras extends React.Component {
       let arraySensores = [];
       sensores.forEach((item) => {
         arraySensores.push({
-          "id": item.id
+          "id": item
         });
       });
       sensores = arraySensores;
-
 
       let perfilAmostra = {
         dataInicioColeta: dataInicioColeta,
@@ -219,7 +218,8 @@ export default class CreatePerfilAmostras extends React.Component {
                                 selectProps={{
                                     menuItens: this.state.equipamentos,
                                     type: "text",
-                                    placeholder: this.state.equipmentosPlaceholder
+                                    placeholder: this.state.equipmentosPlaceholder,
+                                    multiple: true
                                 }}
                             />                     
                         </GridItem>
@@ -233,7 +233,8 @@ export default class CreatePerfilAmostras extends React.Component {
                             selectProps={{
                                 menuItens: this.state.sensores,
                                 type: "text",
-                                placeholder: this.state.equipmentosPlaceholder
+                                placeholder: this.state.equipmentosPlaceholder,
+                                multiple: true
                             }}
                           />             
                         </GridItem>

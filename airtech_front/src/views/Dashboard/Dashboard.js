@@ -54,8 +54,15 @@ export default function Dashboard() {
                 data={dailySalesChart.data}
                 type="Line"
                 options={dailySalesChart.options}
-                listener={dailySalesChart.animation}
+                listener=
+                {dailySalesChart.animation}
               />
+              <Bar
+  data={data}
+  width={100}
+  height={50}
+  options={{ maintainAspectRatio: false }}
+/>
             </CardHeader>
             <CardBody>
               <h4 className={classes.cardTitle}>Daily Sales</h4>

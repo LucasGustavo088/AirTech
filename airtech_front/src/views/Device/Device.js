@@ -39,7 +39,7 @@ export default class Device extends React.Component {
       if(typeof res.data.data.equipamentosCadastrados != "undefined") {
         let newTableData = [];
         res.data.data.equipamentosCadastrados.forEach((equipamento, index) => {
-          let itemTable = [equipamento.pin, equipamento.nome, equipamento.descricao, equipamento.dataRegistro, equipamento.dataRegistro];
+          let itemTable = [equipamento.pin, equipamento.nome, equipamento.descricao, equipamento.dataRegistro];
           newTableData.push(itemTable);
           console.log(equipamento);
         });
@@ -94,7 +94,7 @@ export default class Device extends React.Component {
             <CardBody>
               <Table
                 tableHeaderColor="primary"
-                tableHead={["PIN", "Nome do aparelho", "Descrição", "Data de criação", "CEP"]}
+                tableHead={["PIN", "Nome do aparelho", "Descrição", "Data de criação"]}
                 tableData={this.state.tableData}
               />
             </CardBody>

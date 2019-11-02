@@ -113,6 +113,11 @@ export default function CustomSelect(props) {
           onChange={handleChange}
           input={<Input />}
           MenuProps={MenuProps}
+          classes={{
+            root: marginTop,
+            disabled: classes.disabled,
+            underline: underlineClasses
+          }}
         >
           {selectProps.menuItens.map(item => (
             <MenuItem key={item.id} value={item.id} style={getStyles(item, personName, theme)}>

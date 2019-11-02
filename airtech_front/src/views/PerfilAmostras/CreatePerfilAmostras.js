@@ -211,7 +211,7 @@ export default class CreatePerfilAmostras extends React.Component {
                         </GridItem>
                         <GridItem xs={12} sm={12} md={6}>
                             <CustomSelect
-                                labelText="ID dos equipamento(s)"
+                                labelText="Equipamentos"
                                 id="equipamentos"
                                 formControlProps={{
                                 fullWidth: true
@@ -225,7 +225,7 @@ export default class CreatePerfilAmostras extends React.Component {
                         </GridItem>
                         <GridItem xs={12} sm={12} md={6}>
                           <CustomSelect
-                            labelText="ID dos equipamento(s)"
+                            labelText="Sensores"
                             id="sensores"
                             formControlProps={{
                             fullWidth: true

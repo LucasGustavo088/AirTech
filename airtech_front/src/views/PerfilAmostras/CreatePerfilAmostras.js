@@ -32,8 +32,7 @@ export default class CreatePerfilAmostras extends React.Component {
         
         this.state = {
           equipamentos: [],
-          equipmentosPlaceholder: "",          
-          sensoresPlaceholder: "",          
+          sensores: [],
         }
     };
 
@@ -47,28 +46,24 @@ export default class CreatePerfilAmostras extends React.Component {
           } 
         }).then(res => {
           console.log('res', res);
-          let equipamentos = [];
-          let sensores = [];
+          let equipamentosItens = [];
           if(typeof res.data.data.equipamentosCadastrados != "undefined") {
-            this.setState({
-              equipamentos: equipamentos
-            });
             res.data.data.equipamentosCadastrados.forEach((item) => {
-              equipamentos.push(item.id);
+              equipamentosItens.push({id: item.id, text: item.nome});
             });
           }
+          this.setState({
+            equipamentos: equipamentosItens
+          });
+
+          let sensoresItens = [];
           if(typeof res.data.data.sensores != "undefined") {
             res.data.data.sensores.forEach((item) => {
-              sensores.push(item.id);
+              sensoresItens.push({id: item.id, text: item.nome});
             });
           }
-          console.log(equipamentos);
-          console.log(sensores);
           this.setState({
-            equipmentosPlaceholder: equipamentos.toString()
-          });
-          this.setState({
-            sensoresPlaceholder: sensores.toString()
+            sensores: sensoresItens
           });
         });
     }
@@ -222,24 +217,25 @@ export default class CreatePerfilAmostras extends React.Component {
                                 fullWidth: true
                                 }}
                                 selectProps={{
-                                    menuItens: equipamentos,
+                                    menuItens: this.state.equipamentos,
                                     type: "text",
                                     placeholder: this.state.equipmentosPlaceholder
                                 }}
                             />                     
                         </GridItem>
                         <GridItem xs={12} sm={12} md={6}>
-                            <CustomInput
-                                labelText="ID dos sensores(s)"
-                                id="sensores"
-                                formControlProps={{
-                                fullWidth: true
-                                }}
-                                inputProps={{
-                                    type: "text",
-                                    placeholder: this.state.sensoresPlaceholder
-                                }}
-                            />          
+                          <CustomSelect
+                            labelText="ID dos equipamento(s)"
+                            id="sensores"
+                            formControlProps={{
+                            fullWidth: true
+                            }}
+                            selectProps={{
+                                menuItens: this.state.sensores,
+                                type: "text",
+                                placeholder: this.state.equipmentosPlaceholder
+                            }}
+                          />             
                         </GridItem>
                         <GridItem xs={12} sm={12} md={6}>
                             

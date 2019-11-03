@@ -17,6 +17,8 @@ import avatar from "assets/img/faces/marc.jpg";
 import skyBackground from "assets/img/background-sky.jpg";
 import logo from "assets/img/logo.png";
 import axios from 'axios';
+import Utils from "utils/utils";
+import api from "services/api";
 
 export default class Register extends React.Component {
   
@@ -31,26 +33,26 @@ export default class Register extends React.Component {
     }
   };
 
-  registerAjax() {
+  registerAjax = () => {
     let nome_completo = document.getElementById("nome_completo").value;
     let email = document.getElementById("email").value;
     let password = document.getElementById("password").value;
     let password_confirmation = document.getElementById("password_confirmation").value;
-    let url = "http://ec2-34-220-121-112.us-west-2.compute.amazonaws.com/api/v1/usuario";
+    let url = api.baseUrl + '/usuario';
     
     if(password != password_confirmation) {
-      alert("Password incorrect");
+      Utils.alertAirtech("Senhas não confirmam", 'error');
     } else {
       let user = {
         nome: nome_completo,
         email: email,
-        password: password
+        senha: password
       };
 
-      axios.post(url, { user })
+      axios.post(url, user)
       .then(res => {
-        console.log(res);
-        console.log(res.data);
+        Utils.alertAirtech("Usuário cadastrado com sucesso. Por favor, faça seu login.", "success");
+        this.props.history.push('/login')
       })
     }
   }

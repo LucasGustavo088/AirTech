@@ -19,6 +19,7 @@ import Select from '@material-ui/core/Select';
 import Checkbox from '@material-ui/core/Checkbox';
 import Chip from '@material-ui/core/Chip';
 
+
 const useStyles = makeStyles(styles);
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -125,11 +126,7 @@ export default function CustomSelect(props) {
             underline: underlineClasses
           }}
         >
-          {selectProps.menuItens.map(item => (
-            <MenuItem key={item.id} value={item.id}>
-              {item.text}
-            </MenuItem>
-          ))}
+          {this.props.MenuItem}
         </Select>
       {error ? (
         <Clear className={classes.feedback + " " + classes.labelRootError} />

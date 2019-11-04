@@ -24,6 +24,7 @@ import LocationOn from "@material-ui/icons/LocationOn";
 import Notifications from "@material-ui/icons/Notifications";
 import Unarchive from "@material-ui/icons/Unarchive";
 import Language from "@material-ui/icons/Language";
+import Store from "@material-ui/icons/Store";
 // core components/views for Admin layout
 import DashboardPage from "views/Dashboard/Dashboard.js";
 import UserProfile from "views/UserProfile/UserProfile.js";
@@ -96,7 +97,7 @@ const dashboardRoutes = [
     path: "/localizacao/list-localizacao",
     name: "Listar localizações",
     rtlName: "طباعة",
-    icon: LibraryBooks,
+    icon: Store,
     component: Localizacao,
     layout: "/admin"
   },

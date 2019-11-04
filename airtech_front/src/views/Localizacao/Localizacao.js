@@ -19,14 +19,14 @@ export default class Localizacao extends React.Component {
   
   constructor(props) {
     super(props);
-    this.getDeviceAjax();
+    this.getLocalizacaoAjax();
 
     this.state = {
       tableData: []
     }
   };
 
-  getDeviceAjax = () => {
+  getLocalizacaoAjax = () => {
     let url = api.baseUrl + "localizacao";
     axios({
       method: 'get',

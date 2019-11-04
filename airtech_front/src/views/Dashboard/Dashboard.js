@@ -28,6 +28,8 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardIcon from "components/Card/CardIcon.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/styles';
 
 import { bugs, website, server } from "variables/general.js";
 
@@ -39,26 +41,26 @@ import {
 
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
 import api from "services/api";
-import Axios from "axios";
+import axios from "axios";
 import { getToken } from "services/auth";
 
-const useStyles = makeStyles(styles);
 
-const classes = useStyles();
-export default class Dashboard extends React.Component {
+class Dashboard extends React.Component {
   
   constructor(props) {
     super(props);
     this.getDeviceAjax();
-
+    this.getLocalizacaoAjax();
     this.state = {
-      qtdAparelhos: 0
+      qtdAparelhos: 0,
+      qtdPerfisAmostra: 2,
+      qtdLocalizacoes: 0
     }
   };
   
   getDeviceAjax = () => {
     let url = api.baseUrl + "equipamento";
-    Axios({
+    axios({
       method: 'get',
       url: url,
       headers: {
@@ -74,7 +76,24 @@ export default class Dashboard extends React.Component {
     });
   }
 
+  getLocalizacaoAjax = () => {
+    let url = api.baseUrl + "localizacao";
+    axios({
+      method: 'get',
+      url: url,
+      headers: {
+        "Authorization" : getToken()
+      } 
+    }).then(res => {
+      console.log('res', res);
+      if(typeof res.data.data.localizacoesDisponiveis != "undefined") {
+        this.setState({qtdLocalizacoes: res.data.data.localizacoesDisponiveis.length});
+      }
+    });
+  }
+
   render() {
+    const { classes } = this.props;
     return (
       <div>
         <GridContainer>
@@ -91,7 +110,7 @@ export default class Dashboard extends React.Component {
                 />
               </CardHeader>
               <CardBody>
-                <h4 className={classes.cardTitle}>Daily Sales</h4>
+                <h4 className={classes.cardTitle}>(1 DS)</h4>
                 <p className={classes.cardCategory}>
                   <span className={classes.successText}>
                     <ArrowUpward className={classes.upArrowCardCategory} /> 55%
@@ -119,7 +138,7 @@ export default class Dashboard extends React.Component {
                 />
               </CardHeader>
               <CardBody>
-                <h4 className={classes.cardTitle}>Email Subscriptions</h4>
+                <h4 className={classes.cardTitle}>(2 DS)</h4>
                 <p className={classes.cardCategory}>Last Campaign Performance</p>
               </CardBody>
               <CardFooter chart>
@@ -141,7 +160,7 @@ export default class Dashboard extends React.Component {
                 />
               </CardHeader>
               <CardBody>
-                <h4 className={classes.cardTitle}>Completed Tasks</h4>
+                <h4 className={classes.cardTitle}>(3 DS)</h4>
                 <p className={classes.cardCategory}>Last Campaign Performance</p>
               </CardBody>
               <CardFooter chart>
@@ -159,9 +178,9 @@ export default class Dashboard extends React.Component {
                 <CardIcon color="warning">
                   <Icon>content_copy</Icon>
                 </CardIcon>
-                <p className={classes.cardCategory}>Qtd. de aparelhos</p>
+                <p className={classes.cardCategory}>Aparelhos</p>
                 <h3 className={classes.cardTitle} id="qtdAparelhos">
-                  0 (DS)
+                  {this.state.qtdAparelhos} 
                   </h3>
               </CardHeader>
               <CardFooter stats>
@@ -182,8 +201,8 @@ export default class Dashboard extends React.Component {
                 <CardIcon color="success">
                   <Store />
                 </CardIcon>
-                <p className={classes.cardCategory}>Revenue</p>
-                <h3 className={classes.cardTitle}>$34,245</h3>
+                <p className={classes.cardCategory}>Localizações</p>
+                <h3 className={classes.cardTitle}>{this.state.qtdLocalizacoes}</h3>
               </CardHeader>
               <CardFooter stats>
                 <div className={classes.stats}>
@@ -199,8 +218,8 @@ export default class Dashboard extends React.Component {
                 <CardIcon color="danger">
                   <Icon>info_outline</Icon>
                 </CardIcon>
-                <p className={classes.cardCategory}>Fixed Issues</p>
-                <h3 className={classes.cardTitle}>75</h3>
+                <p className={classes.cardCategory}>Perfis (amostra)</p>
+                <h3 className={classes.cardTitle}>{this.state.qtdPerfisAmostra} (DS)</h3>
               </CardHeader>
               <CardFooter stats>
                 <div className={classes.stats}>
@@ -298,3 +317,9 @@ export default class Dashboard extends React.Component {
   }
 
 }
+
+Dashboard.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(Dashboard);

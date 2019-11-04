@@ -5,6 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import Table from "components/Table/Table.js";
+import Visibility from "@material-ui/icons/Visibility";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
@@ -27,7 +28,7 @@ export default class PerfilAmostras extends React.Component {
   };
 
   getPerfilAmostrasAjax = () => {
-    let url = api.baseUrl + "equipamento";
+    let url = api.baseUrl + "amostra/perfilAmostra";
     axios({
       method: 'get',
       url: url,
@@ -36,12 +37,12 @@ export default class PerfilAmostras extends React.Component {
       } 
     }).then(res => {
       console.log('res', res);
-      if(typeof res.data.data.equipamentosCadastrados != "undefined") {
-        let newTableData = [];
-        res.data.data.equipamentosCadastrados.forEach((equipamento, index) => {
-          let itemTable = [equipamento.dataRegistro, equipamento.dataRegistro, equipamento.pin, equipamento.nome, equipamento.descricao];
+      let newTableData = [];
+      if(typeof res.data.data.perfis !== 'undefined') {
+        res.data.data.perfis.forEach((item, index) => {
+          let itemTable = [item.dataInicioColeta, item.dataTerminoColeta, item.tempoExposicao, item.equipamentos, item.sensores, item.status, <Visibility style={{color: "#00bae0"}}/>];
           newTableData.push(itemTable);
-          console.log(equipamento);
+          console.log(item);
         });
         this.setState({tableData: newTableData});
       }
@@ -94,7 +95,7 @@ export default class PerfilAmostras extends React.Component {
             <CardBody>
               <Table
                 tableHeaderColor="primary"
-                tableHead={["Data de inicio", "Data de término", "Tempo de exposição", "Equipamentos", "Sensores"]}
+                tableHead={["Data de inicio", "Data de término", "Tempo de exposição", "Equipamentos", "Sensores", "Status", "Ações"]}
                 tableData={this.state.tableData}
               />
             </CardBody>

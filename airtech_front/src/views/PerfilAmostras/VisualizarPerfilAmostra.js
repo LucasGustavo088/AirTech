@@ -23,12 +23,11 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import CustomSelect from "components/CustomSelect/CustomSelect";
 
-export default class CreatePerfilAmostras extends React.Component {
+export default class VisualizarPerfilAmostra extends React.Component {
     
     constructor(props) {
         super(props);
         this.getDeviceAjax();
-
         
         this.state = {
           equipamentos: [],
@@ -68,66 +67,7 @@ export default class CreatePerfilAmostras extends React.Component {
         });
     }
 
-    createAjax() {
-      let dataInicioColeta = document.getElementById("dataInicioColeta").value;
-      let dataTerminoColeta = document.getElementById("dataTerminoColeta").value;
-      let tempoExposicao = parseInt(document.getElementById("tempoExposicao").value);
-      let equipamentos = document.getElementById("equipamentos").value;
-      let sensores = document.getElementById("sensores").value;
-      let url = api.baseUrl + "amostra/cadastrarPerfil";
-      
-      equipamentos=equipamentos.split(',');
-      let arrayEquipamentos = [];
-      equipamentos.forEach((item) => {
-        arrayEquipamentos.push({
-          "id": item
-        });
-      });
-      equipamentos = arrayEquipamentos;
-
-      sensores=sensores.split(',');
-      let arraySensores = [];
-      sensores.forEach((item) => {
-        arraySensores.push({
-          "id": item
-        });
-      });
-      sensores = arraySensores;
-
-      let perfilAmostra = {
-        dataInicioColeta: dataInicioColeta,
-        dataTerminoColeta: dataTerminoColeta,
-        tempoExposicao: tempoExposicao,
-        equipamentos: equipamentos,
-        sensores: sensores,
-      };
-
-      let token = getToken();
-
-      /* Val(puidação */
-
-      if(token == "") {
-        Utils.alertAirtech("Houve um erro ao obter o token");
-      } else {
-        axios({
-          method: 'post',
-          url: url,
-          headers: {
-            "Authorization" : token
-          }, 
-          data: perfilAmostra
-        }).then(res => {
-          if(res.data.success) {
-            Utils.alertAirtech("Perfil de amostra adicionada com sucesso.", "success");
-          } else {
-            Utils.alertAirtech("Não foi possível adicionar", "error");
-          }
-        });
-      }
-    }
-
     render() {
-        
         let styles = {
           cardCategoryWhite: {
               color: "rgba(255,255,255,.62)",

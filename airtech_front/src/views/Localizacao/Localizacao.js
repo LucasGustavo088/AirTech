@@ -83,11 +83,11 @@ export default class Localizacao extends React.Component {
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary">
-              <h4 style={styles.cardTitleWhite}>Aparelhos</h4>
+              <h4 style={styles.cardTitleWhite}>Localização</h4>
               <p style={styles.cardCategoryWhite}>
-                <Link to="/admin/device/create-device">
+                {/* <Link to="/admin/device/create-device">
                   <Button style={{color: "white"}}>Adicionar aparelho</Button>
-                </Link>
+                </Link> */}
               </p>
             </CardHeader>
             <CardBody>

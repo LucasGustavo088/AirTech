@@ -40,7 +40,7 @@ export default class PerfilAmostras extends React.Component {
       let newTableData = [];
       if(typeof res.data.data.perfis !== 'undefined') {
         res.data.data.perfis.forEach((item, index) => {
-          let itemTable = [item.dataInicioColeta, item.dataTerminoColeta, item.tempoExposicao, item.equipamentos, item.sensores, item.status, <Visibility style={{color: "#00bae0"}}/>];
+          let itemTable = [item.dataInicioColeta, item.dataTerminoColeta, item.tempoExposicao, item.status, <Link to={`/admin/perfil-amostras/visualizar-perfil-amostra/${item.id}`}><Visibility style={{color: "#00bae0"}} /></Link>];
           newTableData.push(itemTable);
           console.log(item);
         });
@@ -93,11 +93,11 @@ export default class PerfilAmostras extends React.Component {
               </p>
             </CardHeader>
             <CardBody>
-              {/* <Table
+              <Table
                 tableHeaderColor="primary"
-                tableHead={["Data de inicio", "Data de término", "Tempo de exposição", "Equipamentos", "Sensores", "Status", "Ações"]}
+                tableHead={["Data de inicio", "Data de término", "Tempo de exposição", "Status", "Ações"]}
                 tableData={this.state.tableData}
-              /> */}
+              />
             </CardBody>
           </Card>
         </GridItem>

@@ -164,8 +164,14 @@ export default class CreateDevice extends React.Component {
                                   {id: 'nao', text: 'nao'}
                                 ],
                                 type: "text"
-                            }}
-                          />                             
+                            }}>
+                              <MenuItem value="sim">
+                                Sim
+                              </MenuItem>
+                              <MenuItem value="nao">
+                                Não
+                              </MenuItem>
+                           </CustomSelect>
                         </GridItem>
                         <GridItem xs={12} sm={12} md={6}>
                           <CustomInput

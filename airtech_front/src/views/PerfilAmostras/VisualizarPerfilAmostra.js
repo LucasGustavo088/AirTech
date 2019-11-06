@@ -36,7 +36,8 @@ export default class VisualizarPerfilAmostra extends React.Component {
     };
 
     getDeviceAjax = () => {
-        let url = api.baseUrl + "equipamento";
+      
+        let url = api.baseUrl + "perfilAmostra";
         axios({
           method: 'get',
           url: url,

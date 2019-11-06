@@ -223,25 +223,30 @@ export default class CreatePerfilAmostras extends React.Component {
                     >
                       {this.state.equipamentos.map(item => (
                         <MenuItem key={item.id} value={item.id}>
-                          {item.nome}
+                          {item.text}
                         </MenuItem>
                       ))}
                     </CustomSelect>
                   </GridItem>
                   <GridItem xs={12} sm={12} md={6}>
-                    {/* <CustomSelect
-                            labelText="Sensores"
-                            id="sensores"
-                            formControlProps={{
-                            fullWidth: true
-                            }}
-                            selectProps={{
-                                menuItens: this.state.sensores,
-                                type: "text",
-                                placeholder: this.state.equipmentosPlaceholder,
-                                multiple: true
-                            }}
-                          />             */}
+                    <CustomSelect
+                      labelText="Sensores"
+                      id="sensores"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                      selectProps={{
+                        type: "text",
+                        placeholder: this.state.equipmentosPlaceholder,
+                        multiple: true
+                      }}
+                    >
+                        {this.state.sensores.map(item => (
+                        <MenuItem key={item.id} value={item.id}>
+                          {item.text}
+                        </MenuItem>
+                      ))}
+                    </CustomSelect>
                   </GridItem>
                   <GridItem xs={12} sm={12} md={6}>
 
@@ -254,7 +259,7 @@ export default class CreatePerfilAmostras extends React.Component {
             </Card>
           </GridItem>
         </GridContainer>
-      </div>
+      </div >
     );
   }
 }

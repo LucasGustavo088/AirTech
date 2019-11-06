@@ -89,7 +89,7 @@ export default function CustomSelect(props) {
   && selectProps.multiple == true) {
     multipleValue = true
   }
-
+  console.log(props.children);
   return (
     <FormControl
       {...formControlProps}
@@ -126,7 +126,7 @@ export default function CustomSelect(props) {
             underline: underlineClasses
           }}
         >
-          {this.props.MenuItem}
+          {props.children}
         </Select>
       {error ? (
         <Clear className={classes.feedback + " " + classes.labelRootError} />

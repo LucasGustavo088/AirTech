@@ -93,11 +93,11 @@ export default class PerfilAmostras extends React.Component {
               </p>
             </CardHeader>
             <CardBody>
-              <Table
+              {/* <Table
                 tableHeaderColor="primary"
                 tableHead={["Data de inicio", "Data de término", "Tempo de exposição", "Equipamentos", "Sensores", "Status", "Ações"]}
                 tableData={this.state.tableData}
-              />
+              /> */}
             </CardBody>
           </Card>
         </GridItem>

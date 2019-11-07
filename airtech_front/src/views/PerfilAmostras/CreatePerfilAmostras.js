@@ -168,7 +168,7 @@ export default class CreatePerfilAmostras extends React.Component {
                   fontSize: "14px",
                   marginTop: "0",
                   marginBottom: "0"
-                }}>Adicionar aparelho</p>
+                }}>Adicionar perfil de amostra</p>
               </CardHeader>
               <CardBody>
                 <GridContainer>
@@ -198,7 +198,7 @@ export default class CreatePerfilAmostras extends React.Component {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
-                      labelText="Tempo de exposição"
+                      labelText="Tempo de exposição (min)"
                       id="tempoExposicao"
                       formControlProps={{
                         fullWidth: true

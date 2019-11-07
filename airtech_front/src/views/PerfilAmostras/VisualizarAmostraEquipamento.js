@@ -120,10 +120,25 @@ class VisualizarAmostraEquipamento extends React.Component {
             high = 1187;
         }
         
+
+        let labels = [];
+        sensor.dataSet.dataSet.forEach((item, index) => {
+            if(index % 15 == 0) {
+                labels.push(item.data_registro);
+            }
+        });
+
+        let series = [];
+        sensor.dataSet.dataSet.forEach((item, index) => {
+            if(index % 15 == 0) {
+                series.push(item.medicao);
+            }
+        });
+
         let chartSensor = {
             data: {
-                labels: sensor.dataSet.dataSet.map((item) => item.data_registro),
-                series: [sensor.dataSet.dataSet.map((item) => item.medicao)]
+                labels: labels,
+                series: [series]
             },
             options: {
                 lineSmooth: Chartist.Interpolation.cardinal({

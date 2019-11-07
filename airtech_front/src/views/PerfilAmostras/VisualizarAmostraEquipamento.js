@@ -122,7 +122,7 @@ class VisualizarAmostraEquipamento extends React.Component {
         
         let chartSensor = {
             data: {
-                labels: sensor.dataSet.dataSet.map((item) => item.data_registro.substring(5, 10)),
+                labels: sensor.dataSet.dataSet.map((item) => item.data_registro),
                 series: [sensor.dataSet.dataSet.map((item) => item.medicao)]
             },
             options: {
@@ -136,7 +136,19 @@ class VisualizarAmostraEquipamento extends React.Component {
                     right: 0,
                     bottom: 0,
                     left: 0
-                }
+                },
+                axisY: {
+                    offset: 80,
+                    labelInterpolationFnc: function(value) {
+                      return value + ' ' + sensor.unidadeMedida;
+                    },
+                    scaleMinSpace: 15
+                },
+                axisX: {
+                    labelInterpolationFnc: function(value) {
+                      return value.substring(5, 10).replace('-', '/') + '<br>' + value.substring(10,16).replace('T', '');
+                    }
+                },
             },
             // for animation
             animation: {

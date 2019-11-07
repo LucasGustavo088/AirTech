@@ -112,7 +112,7 @@ export default class Login extends React.Component {
                         fullWidth: true
                       }}
                       inputProps={{
-                        value: "mariana.mendes@gmail.com"
+                        value: "lucas.gustavo088@gmail.com"
                       }}
                     />
                   </GridItem>

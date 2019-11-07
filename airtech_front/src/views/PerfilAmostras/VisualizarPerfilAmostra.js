@@ -46,6 +46,7 @@ export default class VisualizarPerfilAmostra extends React.Component {
         "Authorization": getToken()
       }
     }).then(res => {
+
       if (typeof res.data.data.perfilAmostra != 'undefined') {
         this.setState({ perfilAmostra: res.data.data.perfilAmostra });
 
@@ -66,7 +67,7 @@ export default class VisualizarPerfilAmostra extends React.Component {
         let tableDataEquipamento = [];
 
         perfilAmostra.equipamentos.forEach((item) => {
-          tableDataEquipamento.push([item.nome, <Link to={`/admin/perfil-amostras/visualizar-perfil-amostra/${pathArray[4]}/visualizar-equipamento/${item.id}`}><Visibility style={{color: "#00bae0"}} /></Link>]);
+          tableDataEquipamento.push([item.nome, <Link to={`/admin/perfil-amostras/visualizar-amostras-equipamento/${pathArray[4]}/${item.id}`}><Visibility style={{color: "#00bae0"}} /></Link>]);
         });
 
         this.setState({

@@ -42,6 +42,7 @@ import PerfilAmostras from "views/PerfilAmostras/PerfilAmostras";
 import CreatePerfilAmostras from "views/PerfilAmostras/CreatePerfilAmostras";
 import Localizacao from "views/Localizacao/Localizacao";
 import VisualizarPerfilAmostra from "views/PerfilAmostras/VisualizarPerfilAmostra";
+import VisualizarAmostraEquipamento from "views/PerfilAmostras/VisualizarAmostraEquipamento";
 
 const dashboardRoutes = [
   {
@@ -91,6 +92,15 @@ const dashboardRoutes = [
     rtlName: "طباعة",
     icon: Notifications,
     component: CreatePerfilAmostras,
+    layout: "/admin",
+    subMenu: true
+  },
+  {
+    path: "/perfil-amostras/visualizar-amostras-equipamento/",
+    name: "Visualizar amostra do equipamento",
+    rtlName: "طباعة",
+    icon: Notifications,
+    component: VisualizarAmostraEquipamento,
     layout: "/admin",
     subMenu: true
   },

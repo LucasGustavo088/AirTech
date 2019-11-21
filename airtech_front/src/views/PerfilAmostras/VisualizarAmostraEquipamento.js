@@ -122,18 +122,23 @@ class VisualizarAmostraEquipamento extends React.Component {
         
 
         let labels = [];
-        sensor.dataSet.dataSet.forEach((item, index) => {
-            if(index % 15 == 0) {
-                labels.push(item.data_registro);
-            }
-        });
-
         let series = [];
-        sensor.dataSet.dataSet.forEach((item, index) => {
-            if(index % 15 == 0) {
-                series.push(item.medicao);
-            }
-        });
+
+        console.log(sensor.dataSet.dataSet);
+        if(typeof sensor.dataSet != 'undefined' && typeof sensor.dataSet.dataSet !== 'undefined' && sensor.dataSet.dataSet != null) {
+            console.log(sensor.dataSet.dataSet);
+            sensor.dataSet.dataSet.forEach((item, index) => {
+                if(index % 15 == 0) {
+                    labels.push(item.data_registro);
+                }
+            });
+    
+            sensor.dataSet.dataSet.forEach((item, index) => {
+                if(index % 15 == 0) {
+                    series.push(item.medicao);
+                }
+            });
+        }
 
         let chartSensor = {
             data: {

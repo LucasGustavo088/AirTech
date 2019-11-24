@@ -22,6 +22,8 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import CustomSelect from "components/CustomSelect/CustomSelect";
+import InputMask from 'react-input-mask';
+import Input from "@material-ui/core/Input";
 
 export default class CreatePerfilAmostras extends React.Component {
 
@@ -33,6 +35,11 @@ export default class CreatePerfilAmostras extends React.Component {
     this.state = {
       equipamentos: [],
       sensores: [],
+      cadastro: {
+        dataInicioColeta: '',
+        dataTerminoColeta: '',
+        tempoExposicao: ''
+      }
     }
   };
 
@@ -68,13 +75,72 @@ export default class CreatePerfilAmostras extends React.Component {
     });
   }
 
-  createAjax() {
-    let dataInicioColeta = document.getElementById("dataInicioColeta").value;
-    let dataTerminoColeta = document.getElementById("dataTerminoColeta").value;
-    let tempoExposicao = parseInt(document.getElementById("tempoExposicao").value);
+  
+
+  createAjax = () => {
+    let dataInicioColeta = this.state.cadastro.dataInicioColeta;
+    let dataTerminoColeta = this.state.cadastro.dataTerminoColeta;
+    let tempoExposicao = this.state.cadastro.tempoExposicao;
     let equipamentos = document.getElementById("equipamentos").value;
     let sensores = document.getElementById("sensores").value;
+
     let url = api.baseUrl + "amostra/cadastrarPerfil";
+
+    /* Validação */
+    if(tempoExposicao == '') {
+      Utils.alertAirtech("O campo tempo de exposição é necessário.", "error");
+      return false;
+    } 
+
+    if(dataInicioColeta == '') {
+      Utils.alertAirtech("O campo data de inicio da coleta é necessário.", "error");
+      return false;
+    } else {
+      let retornoValidacao = Utils.validarData(dataInicioColeta);
+      if(retornoValidacao == false) {
+        Utils.alertAirtech("O campo data de inicio da coleta não está válido. O formato deverá ser dd/mm/YYYY", "error");
+        return false;
+      }
+    }
+
+    if(dataTerminoColeta == '') {
+      Utils.alertAirtech("O campo data de término da coleta é necessário.", "error");
+      return false;
+    } else {
+      let retornoValidacao = Utils.validarData(dataTerminoColeta);
+      if(retornoValidacao == false) {
+        Utils.alertAirtech("O campo data de término de coleta não está válido. O formato deverá ser dd/mm/YYYY", "error");
+        return false;
+      }
+    }
+    if(equipamentos == "") {
+      Utils.alertAirtech("Selecione pelo menos um equipamento.", "error");
+      return false;
+    }
+
+    if(sensores == "") {
+      Utils.alertAirtech("Selecione pelo menos um sensor.", "error");
+      return false;
+    }
+
+    let dataInicioColetaSplit = dataInicioColeta.split('/');
+    let dataInicioColetaJS = new Date(dataInicioColetaSplit[2] + '/' + dataInicioColetaSplit[1] + '/' + dataInicioColetaSplit[0]);
+    if(dataInicioColetaJS < new Date()) {
+      Utils.alertAirtech('Insira uma data maior que hoje no campo "Data de inicio"', "error");
+      return false;
+    }
+
+    let dataTerminoColetaSplit = dataTerminoColeta.split('/');
+    let dataTerminoColetaJS = new Date(dataTerminoColetaSplit[2] + '/' + dataTerminoColetaSplit[1] + '/' + dataTerminoColetaSplit[0]);
+    if(dataTerminoColetaJS < new Date()) {
+      Utils.alertAirtech('Insira uma data maior que hoje no campo "Data de término"', "error");
+      return false;
+    }
+
+    if(dataTerminoColetaJS < dataInicioColetaJS) {
+      Utils.alertAirtech('A data de termino não pode ser maior que a data de inicio', "error");
+      return false;
+    }
 
     equipamentos = equipamentos.split(',');
     let arrayEquipamentos = [];
@@ -101,7 +167,6 @@ export default class CreatePerfilAmostras extends React.Component {
       equipamentos: equipamentos,
       sensores: sensores,
     };
-
     let token = getToken();
 
     /* Val(puidação */
@@ -124,6 +189,32 @@ export default class CreatePerfilAmostras extends React.Component {
         }
       });
     }
+  }
+
+  changeTempoExposicao = (event) => {
+    let valor = event.target.value;
+    
+    let cadastro = this.state.cadastro;
+    if(valor != null && valor != '') {
+      valor = Math.abs(valor);
+      valor = parseInt(valor);
+    }
+    cadastro.tempoExposicao = valor;
+    this.setState({cadastro: cadastro});
+  }
+
+  changeDataTerminoColeta = (event) => {
+    let valor = event.target.value;
+    let cadastro = this.state.cadastro;
+    cadastro.dataTerminoColeta = valor;
+    this.setState({cadastro: cadastro});
+  }
+
+  changeDataInicioColeta = (event) => {
+    let valor = event.target.value;
+    let cadastro = this.state.cadastro;
+    cadastro.dataInicioColeta = valor;
+    this.setState({cadastro: cadastro});
   }
 
   render() {
@@ -177,7 +268,12 @@ export default class CreatePerfilAmostras extends React.Component {
                       labelText="Data do ínicio da coleta"
                       id="dataInicioColeta"
                       inputProps={{
-                        type: "text"
+                        type: "text",
+                        onChange: this.changeDataInicioColeta,
+                        value: this.state.cadastro.dataInicioColeta,
+                        mask: '99/99/9999',
+                        maskChar: " ",
+                        tag: {InputMask}
                       }}
                       formControlProps={{
                         fullWidth: true
@@ -189,7 +285,9 @@ export default class CreatePerfilAmostras extends React.Component {
                       labelText="Data do término da coleta"
                       id="dataTerminoColeta"
                       inputProps={{
-                        type: "text"
+                        type: "text",
+                        onChange: this.changeDataTerminoColeta,
+                        value: this.state.cadastro.dataTerminoColeta
                       }}
                       formControlProps={{
                         fullWidth: true
@@ -204,7 +302,9 @@ export default class CreatePerfilAmostras extends React.Component {
                         fullWidth: true
                       }}
                       inputProps={{
-                        type: "number"
+                        type: "number",
+                        onChange: this.changeTempoExposicao,
+                        value: this.state.cadastro.tempoExposicao
                       }}
                     />
                   </GridItem>

@@ -32,6 +32,32 @@ class Utils {
         return baseUrl;
     }
 
+    static validarData = (data) => {
+        let retorno = false;
+
+        if(data.length != 10) {
+            return retorno;
+        }
+
+        data = data.split('/');
+        if(data < 3) {
+            return retorno;
+        }
+        
+        let d = new Date(data[2] + '/' + data[1] + '/' + data[0]); 
+        
+        Date.prototype.isValid = function () { 
+              
+            // If the date object is invalid it 
+            // will return 'NaN' on getTime()  
+            // and NaN is never equal to itself. 
+            return this.getTime() === this.getTime(); 
+        }; 
+          
+        retorno = d.isValid(); 
+        return retorno;
+    }
+
 }
 
 export default Utils;

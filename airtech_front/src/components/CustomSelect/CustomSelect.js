@@ -89,7 +89,6 @@ export default function CustomSelect(props) {
   && selectProps.multiple == true) {
     multipleValue = true
   }
-  console.log(props.children);
   return (
     <FormControl
       {...formControlProps}

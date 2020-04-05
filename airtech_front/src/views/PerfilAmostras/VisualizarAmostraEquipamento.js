@@ -19,6 +19,8 @@ import api from "services/api";
 import { getToken } from "services/auth";
 import Utils from "utils/utils";
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
+import MenuItem from '@material-ui/core/MenuItem';
+import CustomSelect from "components/CustomSelect/CustomSelect";
 
 import { withStyles } from '@material-ui/styles';
 class VisualizarAmostraEquipamento extends React.Component {
@@ -30,7 +32,9 @@ class VisualizarAmostraEquipamento extends React.Component {
 
         this.state = {
             tableData: [],
-            perfilAmostra: []
+            perfilAmostra: [],
+            quantidadeItensGraficoSeries: 15,
+            quantidadeItensGraficoLabel: 15
         }
     };
 
@@ -73,7 +77,35 @@ class VisualizarAmostraEquipamento extends React.Component {
                 tableDataValue = [
                     ['Status', perfilAmostra.status],
                     ['Nome do equipamento', equipamento.nome],
-                    ['Descrição', equipamento.descricao]
+                    ['Descrição', equipamento.descricao],
+                    ['Quantidade de itens em Labels', <select
+                      labelText="Quantidade de itens em Labels"
+                      id="quantidadeItensGraficoLabel"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+
+                      class="custom-select"
+                      selectProps={{
+                        type: "text",
+                        placeholder: ""
+                      }}
+                      onChange={this.handleChangeLabels}
+                    >
+                        <option key={0} value={1}>
+                          1
+                        </option>
+                        <option selected={true} key={1} value={5}>
+                          5
+                        </option>
+                        <option key={2} value={10}>
+                          10
+                        </option>
+                        <option key={3} value={15}>
+                          15
+                        </option>
+                    </select>],
+                    ['Quantidade de itens em Series', this.state.quantidadeItensGraficoSeries]
                 ];
 
                 this.setState({ tableData: tableDataValue });
@@ -88,6 +120,11 @@ class VisualizarAmostraEquipamento extends React.Component {
                 Utils.alertAirtech("Houve um erro ao obter o cadastro", "error");
             }
         });
+    }
+
+    handleChangeLabels = () => {
+        let quantidadeItensGraficoLabel = document.getElementById("quantidadeItensGraficoLabel").value;
+        this.setState({quantidadeItensGraficoLabel: quantidadeItensGraficoLabel});
     }
 
     montarAmostraSensoresValores = (sensor, index) => {
@@ -128,13 +165,13 @@ class VisualizarAmostraEquipamento extends React.Component {
         if(typeof sensor.dataSet != 'undefined' && typeof sensor.dataSet.dataSet !== 'undefined' && sensor.dataSet.dataSet != null) {
             console.log(sensor.dataSet.dataSet);
             sensor.dataSet.dataSet.forEach((item, index) => {
-                if(index % 15 == 0) {
+                if(index % this.state.quantidadeItensGraficoSeries == 0) {
                     labels.push(item.data_registro);
                 }
             });
     
             sensor.dataSet.dataSet.forEach((item, index) => {
-                if(index % 15 == 0) {
+                if(index % this.state.quantidadeItensGraficoLabel == 0) {
                     series.push(item.medicao);
                 }
             });

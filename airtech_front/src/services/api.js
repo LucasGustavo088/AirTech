@@ -1,7 +1,7 @@
 import axios from "axios";
 import { getToken } from "./auth";
 
-const baseUrl = "http://ec2-34-220-121-112.us-west-2.compute.amazonaws.com/api/v1/";
+const baseUrl = "http://ec2-18-237-49-206.us-west-2.compute.amazonaws.com/api/v1/";
 const api = axios.create({
     baseURL: baseUrl
 });

@@ -6,7 +6,6 @@ import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import Table from "components/Table/Table.js";
 import Visibility from "@material-ui/icons/Visibility";
-import TocIcon from '@material-ui/icons/Toc';
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
@@ -16,38 +15,66 @@ import { Link } from "react-router-dom";
 import axios from 'axios';
 import api from "services/api";
 import { getToken } from "services/auth";
+import Utils from "utils/utils";
 
-export default class PerfilAmostras extends React.Component {
-  
+export default class VisualizarPerfilAmostraAnalise extends React.Component {
+
   constructor(props) {
     super(props);
     this.getPerfilAmostrasAjax();
 
     this.state = {
-      tableData: []
+      tableData: [],
+      tableDataEquipamento: []
     }
   };
 
   getPerfilAmostrasAjax = () => {
-    let url = api.baseUrl + "amostra/perfilAmostra";
+    var newURL = window.location.protocol + "//" + window.location.host + "/" + window.location.pathname + window.location.search;
+    var pathArray = window.location.pathname.split('/');
+
+    if (pathArray.length < 5) {
+      Utils.alertAirtech("Houve um erro ao obter os parametros", "error");
+      return false;
+    }
+
+    let url = api.baseUrl + "amostra/perfilAmostra/" + pathArray[4];
     axios({
       method: 'get',
       url: url,
       headers: {
-        "Authorization" : getToken()
-      } 
+        "Authorization": getToken()
+      }
     }).then(res => {
-      console.log('res', res);
-      let newTableData = [];
-      if(typeof res.data.data.perfis !== 'undefined') {
-        res.data.data.perfis.forEach((item, index) => {
-          let itemTable = [item.dataInicioColeta, item.dataTerminoColeta, item.tempoExposicao, item.status, <React.Fragment>
-          <Link to={`/admin/perfil-amostras/visualizar-perfil-amostra/${item.id}`}><Visibility style={{color: "#00bae0"}} /></Link> 
-          <Link to={`/admin/perfil-amostras/visualizar-perfil-amostra-analise/${item.id}`}> <TocIcon style={{color: "#00bae0"}}/></Link></React.Fragment>];
-          newTableData.push(itemTable);
-          console.log(item);
+
+      if (typeof res.data.data.perfilAmostra != 'undefined') {
+        this.setState({ perfilAmostra: res.data.data.perfilAmostra });
+
+        let perfilAmostra = this.state.perfilAmostra;
+        let tableData = [];
+        tableData = [
+          ['Data de inicio', perfilAmostra.dataInicioColeta],
+          ['Data de término', perfilAmostra.dataTerminoColeta],
+          ['Tempo de exposição', perfilAmostra.tempoExposicao],
+          ['Status', perfilAmostra.status],
+          ['Sensores', perfilAmostra.sensores.map((item) => ' ' + item.nome + ',')],
+        ];
+        
+        this.setState({
+          tableData: tableData
         });
-        this.setState({tableData: newTableData});
+
+        let tableDataEquipamento = [];
+
+        perfilAmostra.equipamentos.forEach((item) => {
+          tableDataEquipamento.push([item.nome, <Link to={`/admin/perfil-amostras/visualizar-amostras-equipamento/${pathArray[4]}/${item.id}`}><Visibility style={{color: "#00bae0"}} /></Link>]);
+        });
+
+        this.setState({
+          tableDataEquipamento: tableDataEquipamento
+        });
+      } else {
+        Utils.alertAirtech("Houve um erro ao obter o cadastro", "error");
       }
     });
   }
@@ -82,7 +109,7 @@ export default class PerfilAmostras extends React.Component {
         }
       }
     };
-    
+
     return (
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
@@ -91,15 +118,27 @@ export default class PerfilAmostras extends React.Component {
               <h4 style={styles.cardTitleWhite}>Perfil das amostras</h4>
               <p style={styles.cardCategoryWhite}>
                 <Link to="/admin/perfil-amostras/create-perfil-amostras">
-                  <Button style={{color: "white"}}>Adicionar perfil de amostra</Button>
+                  <Button style={{ color: "white" }}>Visualizar perfil de amostra</Button>
                 </Link>
               </p>
             </CardHeader>
             <CardBody>
               <Table
                 tableHeaderColor="primary"
-                tableHead={["Data de inicio", "Data de término", "Tempo de exposição", "Status", "Ações"]}
+                tableHead={["Item", "Valor"]}
                 tableData={this.state.tableData}
+              />
+            </CardBody>
+          </Card>
+          <Card>
+            <CardHeader color="primary">
+              <h5 style={styles.cardTitleWhite}>Equipamentos</h5>
+            </CardHeader>
+            <CardBody>
+              <Table
+                tableHeaderColor="primary"
+                tableHead={["Equipamento", "Ação"]}
+                tableData={this.state.tableDataEquipamento}
               />
             </CardBody>
           </Card>

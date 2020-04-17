@@ -28,6 +28,7 @@ import Store from "@material-ui/icons/Store";
 // core components/views for Admin layout
 import DashboardPage from "views/Dashboard/Dashboard.js";
 import UserProfile from "views/UserProfile/UserProfile.js";
+import TocIcon from '@material-ui/icons/Toc';
 import TableList from "views/TableList/TableList.js";
 import Typography from "views/Typography/Typography.js";
 import Icons from "views/Icons/Icons.js";
@@ -42,6 +43,7 @@ import PerfilAmostras from "views/PerfilAmostras/PerfilAmostras";
 import CreatePerfilAmostras from "views/PerfilAmostras/CreatePerfilAmostras";
 import Localizacao from "views/Localizacao/Localizacao";
 import VisualizarPerfilAmostra from "views/PerfilAmostras/VisualizarPerfilAmostra";
+import VisualizarPerfilAmostraAnalise from "views/PerfilAmostras/VisualizarPerfilAmostraAnalise";
 import VisualizarAmostraEquipamento from "views/PerfilAmostras/VisualizarAmostraEquipamento";
 
 const dashboardRoutes = [
@@ -110,6 +112,15 @@ const dashboardRoutes = [
     rtlName: "طباعة",
     icon: Notifications,
     component: VisualizarPerfilAmostra,
+    layout: "/admin",
+    subMenu: true
+  },
+  {
+    path: "/perfil-amostras/visualizar-perfil-amostra-analise",
+    name: "Visualizar análise",
+    rtlName: "طباعة",
+    icon: TocIcon,
+    component: VisualizarPerfilAmostraAnalise,
     layout: "/admin",
     subMenu: true
   },

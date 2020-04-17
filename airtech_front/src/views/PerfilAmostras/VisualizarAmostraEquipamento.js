@@ -55,7 +55,6 @@ class VisualizarAmostraEquipamento extends React.Component {
                 "Authorization": getToken()
             }
         }).then(res => {
-            console.log(res.data.data);
             if (typeof res.data.data.perfilAmostra != 'undefined') {
                 this.setState({ perfilAmostra: res.data.data.perfilAmostra });
 
@@ -90,22 +89,22 @@ class VisualizarAmostraEquipamento extends React.Component {
                         type: "text",
                         placeholder: ""
                       }}
-                      onChange={this.handleChangeLabels}
+                      onChange={e => this.handleChangeLabels(e.target.value)}
                     >
+
                         <option key={0} value={1}>
                           1
                         </option>
-                        <option selected={true} key={1} value={5}>
+                        <option key={1} value={5}>
                           5
                         </option>
                         <option key={2} value={10}>
                           10
                         </option>
-                        <option key={3} value={15}>
+                        <option selected={true} key={3} value={15}>
                           15
                         </option>
-                    </select>],
-                    ['Quantidade de itens em Series', this.state.quantidadeItensGraficoSeries]
+                    </select>]
                 ];
 
                 this.setState({ tableData: tableDataValue });
@@ -114,7 +113,6 @@ class VisualizarAmostraEquipamento extends React.Component {
                     this.montarAmostraSensoresValores(sensor, index);
                 })
                 this.state.perfilAmostra.sensores.map((sensor, index) => {
-                    console.log(sensor);
                 });
             } else {
                 Utils.alertAirtech("Houve um erro ao obter o cadastro", "error");
@@ -122,9 +120,11 @@ class VisualizarAmostraEquipamento extends React.Component {
         });
     }
 
-    handleChangeLabels = () => {
+    handleChangeLabels = (event) => {
         let quantidadeItensGraficoLabel = document.getElementById("quantidadeItensGraficoLabel").value;
         this.setState({quantidadeItensGraficoLabel: quantidadeItensGraficoLabel});
+        console.log(this.state.quantidadeItensGraficoLabel);
+        this.getPerfilAmostrasAjax();
     }
 
     montarAmostraSensoresValores = (sensor, index) => {
@@ -161,11 +161,9 @@ class VisualizarAmostraEquipamento extends React.Component {
         let labels = [];
         let series = [];
 
-        console.log(sensor.dataSet.dataSet);
         if(typeof sensor.dataSet != 'undefined' && typeof sensor.dataSet.dataSet !== 'undefined' && sensor.dataSet.dataSet != null) {
-            console.log(sensor.dataSet.dataSet);
             sensor.dataSet.dataSet.forEach((item, index) => {
-                if(index % this.state.quantidadeItensGraficoSeries == 0) {
+                if(index % this.state.quantidadeItensGraficoLabel == 0) {
                     labels.push(item.data_registro);
                 }
             });
@@ -288,7 +286,6 @@ class VisualizarAmostraEquipamento extends React.Component {
                     colorCardHeader = 'info'
                 }
 
-                console.log(sensor);
                 graficos[index] = <GridItem xs={12} sm={12} md={12}>
                     <Card chart>
                         <CardHeader color={colorCardHeader}>

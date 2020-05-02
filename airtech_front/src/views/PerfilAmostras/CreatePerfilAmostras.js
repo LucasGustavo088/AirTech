@@ -76,6 +76,29 @@ export default class CreatePerfilAmostras extends React.Component {
     let sensores = document.getElementById("sensores").value;
     let url = api.baseUrl + "amostra/cadastrarPerfil";
 
+
+    /* Validação */
+    if(dataInicioColeta.length != "10") {
+      Utils.alertAirtech("A data de inicio está incorreta", "error");
+      return false;
+    }
+
+    if(dataTerminoColeta.length != "10") {
+      Utils.alertAirtech("A data de término está incorreta", "error");
+      return false;
+    }
+
+    let dataInicioComparacao = dataInicioColeta.split('/');
+    dataInicioComparacao = new Date(dataInicioComparacao[2], dataInicioComparacao[1] - 1, dataInicioComparacao[0]);
+
+    let dataTerminoComparacao = dataTerminoColeta.split('/');
+    dataTerminoComparacao = new Date(dataTerminoComparacao[2], dataTerminoComparacao[1] - 1, dataTerminoComparacao[0]);
+
+    if(dataTerminoComparacao < dataInicioComparacao) {
+      Utils.alertAirtech("Verifique as datas. Ex: A data deve ser no formato Brasileiro e A data de término deve ser maior ou igual a data de inicio", "error");
+      return false;
+    }
+
     equipamentos = equipamentos.split(',');
     let arrayEquipamentos = [];
     equipamentos.forEach((item) => {
@@ -94,6 +117,16 @@ export default class CreatePerfilAmostras extends React.Component {
     });
     sensores = arraySensores;
 
+    if(sensores[0]["id"] == "") {
+      Utils.alertAirtech("Selecione pelo menos 1 sensor", "error");
+      return false;
+    }
+
+    if(equipamentos[0]["id"] == "") {
+      Utils.alertAirtech("Selecione pelo menos 1 equipamento", "error");
+      return false;
+    }
+
     let perfilAmostra = {
       dataInicioColeta: dataInicioColeta,
       dataTerminoColeta: dataTerminoColeta,
@@ -104,8 +137,7 @@ export default class CreatePerfilAmostras extends React.Component {
 
     let token = getToken();
 
-    /* Val(puidação */
-
+      
     if (token == "") {
       Utils.alertAirtech("Houve um erro ao obter o token");
     } else {

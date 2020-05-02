@@ -122,9 +122,6 @@ export default class VisualizarPerfilAmostra extends React.Component {
             <CardHeader color="primary">
               <h4 style={styles.cardTitleWhite}>Perfil das amostras</h4>
               <p style={styles.cardCategoryWhite}>
-                <Link to="/admin/perfil-amostras/create-perfil-amostras">
-                  <Button style={{ color: "white" }}>Visualizar perfil de amostra</Button>
-                </Link>
               </p>
             </CardHeader>
             <CardBody>

@@ -44,6 +44,26 @@ export default class CreateDevice extends React.Component {
           publico = 0;
         }
       }
+
+      if(pin == "") {
+        Utils.alertAirtech("Insira um valor para o campo PIN", "error");
+        return false;
+      }
+
+      if(nome == "") {
+        Utils.alertAirtech("Insira um valor para o campo nome", "error");
+        return false;
+      }
+
+      if(descricao == "") {
+        Utils.alertAirtech("Insira um valor para o campo descricao", "error");
+        return false;
+      }
+
+      if(cep_posicao_atual == "") {
+        Utils.alertAirtech("Insira um valor para o campo CEP", "error");
+        return false;
+      }
       
       let device = {
         pin: pin,

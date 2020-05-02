@@ -9,6 +9,7 @@ import Input from "@material-ui/core/Input";
 // @material-ui/icons
 import Clear from "@material-ui/icons/Clear";
 import Check from "@material-ui/icons/Check";
+import InputMask from 'react-input-mask';
 // core components
 import styles from "assets/jss/material-dashboard-react/components/customInputStyle.js";
 

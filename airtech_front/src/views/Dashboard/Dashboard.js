@@ -97,82 +97,6 @@ class Dashboard extends React.Component {
     return (
       <div>
         <GridContainer>
-          <GridItem xs={12} sm={12} md={4}>
-            <Card chart>
-              <CardHeader color="success">
-                <ChartistGraph
-                  className="ct-chart"
-                  data={dailySalesChart.data}
-                  type="Line"
-                  options={dailySalesChart.options}
-                  listener=
-                  {dailySalesChart.animation}
-                />
-              </CardHeader>
-              <CardBody>
-                <h4 className={classes.cardTitle}>(1 DS)</h4>
-                <p className={classes.cardCategory}>
-                  Aumento de 
-                  <span className={classes.successText}>
-                    {/*<ArrowUpward className={classes.upArrowCardCategory} />*/} 55%
-                    </span>{" "} nos niveis de CO2
-                  
-                  </p>
-              </CardBody>
-              <CardFooter chart>
-                <div className={classes.stats}>
-                  <AccessTime /> Ultima atualização a 2 dias atrás
-                  </div>
-              </CardFooter>
-            </Card>
-          </GridItem>
-          <GridItem xs={12} sm={12} md={4}>
-            <Card chart>
-              <CardHeader color="warning">
-                <ChartistGraph
-                  className="ct-chart"
-                  data={emailsSubscriptionChart.data}
-                  type="Bar"
-                  options={emailsSubscriptionChart.options}
-                  responsiveOptions={emailsSubscriptionChart.responsiveOptions}
-                  listener={emailsSubscriptionChart.animation}
-                />
-              </CardHeader>
-              <CardBody>
-                <h4 className={classes.cardTitle}>(2 DS)</h4>
-                <p className={classes.cardCategory}>Media mensal dos niveis de CO2</p>
-              </CardBody>
-              <CardFooter chart>
-                <div className={classes.stats}>
-                  <AccessTime /> Pesquisa iniciada a 12 meses
-                  </div>
-              </CardFooter>
-            </Card>
-          </GridItem>
-          <GridItem xs={12} sm={12} md={4}>
-            <Card chart>
-              <CardHeader color="danger">
-                <ChartistGraph
-                  className="ct-chart"
-                  data={completedTasksChart.data}
-                  type="Line"
-                  options={completedTasksChart.options}
-                  listener={completedTasksChart.animation}
-                />
-              </CardHeader>
-              <CardBody>
-                <h4 className={classes.cardTitle}>(3 DS)</h4>
-                <p className={classes.cardCategory}>Consulta diaria</p>
-              </CardBody>
-              <CardFooter chart>
-                <div className={classes.stats}>
-                  <AccessTime /> Ultima atualização a 11 horas atrás
-                  </div>
-              </CardFooter>
-            </Card>
-          </GridItem>
-        </GridContainer>
-        <GridContainer>
           <GridItem xs={12} sm={6} md={4}>
             <Card>
               <CardHeader color="warning" stats icon>
@@ -186,12 +110,6 @@ class Dashboard extends React.Component {
               </CardHeader>
               <CardFooter stats>
                 <div className={classes.stats}>
-                  <Danger>
-                    <Warning />
-                  </Danger>
-                  <a href="#pablo" onClick={e => e.preventDefault()}>
-                    Adicionar mais
-                    </a>
                 </div>
               </CardFooter>
             </Card>
@@ -206,10 +124,6 @@ class Dashboard extends React.Component {
                 <h3 className={classes.cardTitle}>{this.state.qtdLocalizacoes}</h3>
               </CardHeader>
               <CardFooter stats>
-                <div className={classes.stats}>
-                  <DateRange />
-                  Ultimo registro a 23 horas
-                  </div>
               </CardFooter>
             </Card>
           </GridItem>
@@ -223,10 +137,6 @@ class Dashboard extends React.Component {
                 <h3 className={classes.cardTitle}>{this.state.qtdPerfisAmostra} (DS)</h3>
               </CardHeader>
               <CardFooter stats>
-                <div className={classes.stats}>
-                  <LocalOffer />
-                    Ultima amostra retirada 08/11/2019
-                  </div>
               </CardFooter>
             </Card>
           </GridItem>

@@ -98,6 +98,14 @@ export default class CreatePerfilAmostras extends React.Component {
       Utils.alertAirtech("Verifique as datas. Ex: A data deve ser no formato Brasileiro e A data de término deve ser maior ou igual a data de inicio", "error");
       return false;
     }
+    
+    let hoje = new Date();
+    hoje.setHours(0,0,0,0);
+    
+    if(dataTerminoComparacao < hoje || dataInicioComparacao < hoje) {
+      Utils.alertAirtech("A data de inicio/término deve ser maior que a data de hoje", "error");
+      return false;
+    }
 
     equipamentos = equipamentos.split(',');
     let arrayEquipamentos = [];
@@ -126,7 +134,7 @@ export default class CreatePerfilAmostras extends React.Component {
       Utils.alertAirtech("Selecione pelo menos 1 equipamento", "error");
       return false;
     }
-
+  
     let perfilAmostra = {
       dataInicioColeta: dataInicioColeta,
       dataTerminoColeta: dataTerminoColeta,

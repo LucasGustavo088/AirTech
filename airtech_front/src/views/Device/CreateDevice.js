@@ -44,6 +44,31 @@ export default class CreateDevice extends React.Component {
           publico = 0;
         }
       }
+
+      if(pin == "") {
+        Utils.alertAirtech("Insira um valor para o campo PIN", "error");
+        return false;
+      }
+
+      if(nome == "") {
+        Utils.alertAirtech("Insira um valor para o campo nome", "error");
+        return false;
+      }
+
+      if(descricao == "") {
+        Utils.alertAirtech("Insira um valor para o campo descricao", "error");
+        return false;
+      }
+
+      if(cep_posicao_atual == "") {
+        Utils.alertAirtech("Insira um valor para o campo CEP", "error");
+        return false;
+      }
+
+      if(cep_posicao_atual.length != 8) {
+        Utils.alertAirtech("A quantidade de digitos para o CEP é inválida", "error");
+        return false;
+      }
       
       let device = {
         pin: pin,
@@ -72,6 +97,25 @@ export default class CreateDevice extends React.Component {
             Utils.alertAirtech("Não foi possível adicionar", "error");
           }
         });
+      }
+    }
+
+    verifyCEP(event) {
+
+      if(event.target.value.length == 8) {
+        axios({
+          method: 'get',
+          url: "https://viacep.com.br/ws/" + event.target.value + "/json/"
+        }).then(res => {
+          if(typeof res.data.logradouro != 'undefined') {
+            //ok
+          } else {
+            Utils.alertAirtech("Esse cep é inválido", "error");
+            document.getElementById("cep_posicao_atual").value = '';
+          }
+        });
+      } else {
+        document.getElementById("cep_posicao_atual").value = '';
       }
     }
 
@@ -179,6 +223,11 @@ export default class CreateDevice extends React.Component {
                             id="cep_posicao_atual"
                             formControlProps={{
                               fullWidth: true
+                            }}
+                            inputProps={{
+                              type: "number",
+                              maxlength: "8",
+                              onBlur: this.verifyCEP
                             }}
                           />                            
                         </GridItem>

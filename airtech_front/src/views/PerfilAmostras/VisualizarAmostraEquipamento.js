@@ -164,7 +164,9 @@ class VisualizarAmostraEquipamento extends React.Component {
         if(typeof sensor.dataSet != 'undefined' && typeof sensor.dataSet.dataSet !== 'undefined' && sensor.dataSet.dataSet != null) {
             sensor.dataSet.dataSet.forEach((item, index) => {
                 if(index % this.state.quantidadeItensGraficoLabel == 0) {
-                    labels.push(item.data_registro);
+                    let data_registro_js = new Date(item.data_registro);
+                    let dateBr = data_registro_js.getDate() + '/' + (data_registro_js.getMonth() + 1);
+                    labels.push(dateBr);
                 }
             });
     
@@ -201,7 +203,8 @@ class VisualizarAmostraEquipamento extends React.Component {
                 },
                 axisX: {
                     labelInterpolationFnc: function(value) {
-                      return value.substring(5, 10).replace('-', '/') + '<br>' + value.substring(10,16).replace('T', '');
+                    //   return value.substring(5, 10).replace('-', '/') + '<br>' + value.substring(10,16).replace('T', '');
+                    return value;
                     }
                 },
             },
@@ -315,11 +318,8 @@ class VisualizarAmostraEquipamento extends React.Component {
                 <GridItem xs={12} sm={12} md={12}>
                     <Card>
                         <CardHeader color="primary">
-                            <h4 style={styles.cardTitleWhite}>Perfil das amostras</h4>
+                            <h4 style={styles.cardTitleWhite}>Visualizar amostras do equipamento</h4>
                             <p style={styles.cardCategoryWhite}>
-                                <Link to="/admin/perfil-amostras/create-perfil-amostras">
-                                    <Button style={{ color: "white" }}>Visualizar perfil de amostra</Button>
-                                </Link>
                             </p>
                         </CardHeader>
                         <CardBody>

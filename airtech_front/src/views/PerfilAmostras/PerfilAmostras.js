@@ -42,8 +42,7 @@ export default class PerfilAmostras extends React.Component {
       if(typeof res.data.data.perfis !== 'undefined') {
         res.data.data.perfis.forEach((item, index) => {
           let itemTable = [item.dataInicioColeta, item.dataTerminoColeta, item.tempoExposicao, item.status, <React.Fragment>
-          <Link to={`/admin/perfil-amostras/visualizar-perfil-amostra/${item.id}`}><Visibility style={{color: "#00bae0"}} /></Link> 
-          <Link to={`/admin/perfil-amostras/visualizar-perfil-amostra-analise/${item.id}`}> <TocIcon style={{color: "#00bae0"}}/></Link></React.Fragment>];
+          <Link to={`/admin/perfil-amostras/visualizar-perfil-amostra/${item.id}`}><Visibility style={{color: "#00bae0"}} /></Link></React.Fragment>];
           newTableData.push(itemTable);
           console.log(item);
         });

@@ -6,6 +6,7 @@ import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import Table from "components/Table/Table.js";
 import Visibility from "@material-ui/icons/Visibility";
+import TocIcon from '@material-ui/icons/Toc';
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
@@ -67,7 +68,11 @@ export default class VisualizarPerfilAmostra extends React.Component {
         let tableDataEquipamento = [];
 
         perfilAmostra.equipamentos.forEach((item) => {
-          tableDataEquipamento.push([item.nome, <Link to={`/admin/perfil-amostras/visualizar-amostras-equipamento/${pathArray[4]}/${item.id}`}><Visibility style={{color: "#00bae0"}} /></Link>]);
+          tableDataEquipamento.push([item.nome, 
+          <React.Fragment>
+            <Link to={`/admin/perfil-amostras/visualizar-amostras-equipamento/${pathArray[4]}/${item.id}`}><Visibility style={{color: "#00bae0"}} /></Link>
+            <Link to={`/admin/perfil-amostras/visualizar-perfil-amostra-analise/${pathArray[4]}/${item.id}`}> <TocIcon style={{color: "#00bae0"}}/></Link>
+          </React.Fragment>]);
         });
 
         this.setState({
@@ -117,9 +122,6 @@ export default class VisualizarPerfilAmostra extends React.Component {
             <CardHeader color="primary">
               <h4 style={styles.cardTitleWhite}>Perfil das amostras</h4>
               <p style={styles.cardCategoryWhite}>
-                <Link to="/admin/perfil-amostras/create-perfil-amostras">
-                  <Button style={{ color: "white" }}>Visualizar perfil de amostra</Button>
-                </Link>
               </p>
             </CardHeader>
             <CardBody>
